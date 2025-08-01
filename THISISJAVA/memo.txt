@@ -1,0 +1,207 @@
+0703
+프로젝트 생성 -> 패키지 생성 -> 자바 파일 생성 (21p~27p)
+
+println : print + enter (줄바꿈)
+printf : 지시자를 이용해 여러 형식으로 변환하여 출력
+
+%s 문자열 string
+%6s : 6자리 문자열 + 왼쪽 공백 -> ___abc
+%-6s : 6자리 문자열 + 오른쪽 공백 -> abc___
+
+%d 정수형 int
+%6d : 6자리 정수 + 왼쪽 공백 -> ___123
+%-6d : 6자리 정수 + 오른쪽 공백 -> 123___
+%06d : 6자리 정수 + 왼쪽 빈자리 0 -> 000123
+
+형변환 : 
+int intX = Integer.parseInt(strX)
+String str = String.valueOf(intX)
+
+입력 받기 :
+Scanner scan1 = new Scanner(System.in);
+String str = scan1.nextLine();
+int intX = scan1.nextInt();
+
+0704
+큰 허용 범위 타입 = 작은 허용 범위 타입
+          <-----------
+          자동 타입 변환
+
+허용 범위 순:
+byte < short, char < int < long < float < double 
+
+%10.2f : 정수 7자리 + 소수점 + 소수 2자리 + 왼쪽 공백 -> ____123.45
+%-10.2f : 정수 7자리 + 소수점 + 소수 2자리 + 오른쪽 공백 -> 123.45____
+%010.2f : 정수 7자리 + 소수점 + 소수 2자리 + 왼쪽 빈자리 0 -> 0000123.45
+
+char grade = (score>90) ? 'A' : 'B'; // score가 90보다 크면 grade에 'A' 입력
+
+AND : && or & // &&는 앞의 결과가 false 면 뒤 연산 하지 않고 false 산출
+OR : | or || // ||는 앞의 결과가 true 면 뒤 연산 하지 않고 true 산출
+
+XOR : A^B -> A 혹은 B 둘 중 하나만 true 여야 true
+NOT : !A -> true false 바꿈
+
+String 비교 : 
+StrA.equal(StrB) -> true or false 
+
+난수 생성 : double num1 = Math.random(); // 0.0~1.0
+
+str.charAt(index) : index번째 가져옴
+
+5 / 0.0 -> Infinity // Double.isInfinite(변수) 로 T/F 출력 가능 
+5 % 0.0 -> NaN  // Double.isNaN(변수) 로 T/F 출력 가능
+
+
+0707
+int a = 1;
+switch (a) {
+    case 1:
+        System.out.println("1");
+    case 2:
+        System.out.println("2");    
+    default:
+        break;
+} // break 없으면 case 1, 2 둘다 출력
+
+A : for(~;~;~){
+    for(-;-;-){
+        if(c){
+            break A; 
+        }
+    }
+    System.out.println("1");
+}
+System.out.println("2");
+  // A for문 break 되여 2 만 출력됨
+
+
+0708
+final int A = 123; // final <- 상수처리, 이후 변경 불가
+
+배열 :
+타입[] 변수명 = new 타입[길이];
+타입[] 변수명 = {항목1, 항목2...};
+타입[] 변수명;
+
+System.out.println(Arrays.toString(arr1)); // 배열 출력
+
+Arrays.sort(arr1); // 배열 오름차순 정렬
+Arrays.sort(arr1, Collections.reverseOrder()); // 내림차순 정렬 
+
+
+0710
+System, String << 바로 사용 가능 ex) System.out.println() / String str = "A" 
+Scanner << 객체생성 해줘야 사용 가능 ex) Scanner scan = new Scanner() 
+    └ new << 메모리에 올려주는 역할 
+
+System, String << <Static>이 붙어있어 class가 로딩될 때(프로그램이 시작될 때) 메모리에 올라가서 바로 사용이 가능
+Scanner << 객체가 생성될 때 메모리에 올라감
+
+public static void main(String[] args)
+public : 접근제한자 (어디서든 접근 가능)
+static << 메모리에 올라가 있다는 의미
+void main(String[] args) : 메서드 
+    void : 리턴타입 << 리턴하는 내용이 없다
+    main : 메서드 명
+    (String[] args) : 매개변수 << 메서드에 넘겨줄 값(매개타입 매개명)
+
+배열 복사:
+System.arraycopy(원본배열,복사시작인덱스, 새배열,붙여넣기시작인덱스, 복사항복수)
+
+
+0714
+객체 << 실제로 존재하는 모든 것 // ex) TV
+클래스 << 객체를 정의해 놓은 것 // ex) TV의 속성 >> 길이, 무게, 색상, 기능(on/off, 볼륨up/down) 등
+인스턴스 << 객체를 통해 만들어진 것 ex) 멤버 변수 >> int 가로; int 세로; float 무게; String color; / 메서드 >> 채널 on() {}; 등
+Scanner scan = new Scanner(System.in); << 인스턴스 생성
+클래스 참조변수      인스턴스
+
+지역변수 >> 메서드 내에 선언되어 있는 변수
+
+int iv << 인스턴스 변수 
+static int cv << 클래스 변수
+
+
+0715
+오버로딩 : 한 클래스 내에 같은 이름의 메서드를 여러개 정의하는 것
+static String concatenate(String delim, String... args) // 가변인수는 항상 마지막에
+
+생성자 << 리턴값이 없는 인스턴스 초기화 메서드 (인스턴스 생성될 때 호출) 
+Card c = new Card(); >> Card() 가 생성자
+
+Car(String color) { this(color,"auto",4); }
+    생성자에서 다른 생성자를 호출할때는 반드시 첫줄
+    클래스 이름 대신 this를 사용
+
+명시적 초기화 : 변수를 선언과 동시에 초기화 하는 것
+초기화 블럭 -> 클래스 초기화 블럭 / 인스턴스 초기화 블럭
+
+멤버변수의 초기화 시기와 순서
+클래스 변수의 초기화 시점   >> 클래스가 처음 로딩될 때 단 한번 초기화
+인스턴스 변수의 초기화 시점 >> 인스턴스가 생성될 때마다 인스턴스 별로 초기화
+
+클래스 변수의 초기화 : 기본값 -> 명시적 초기화 -> 클래스 초기화 블럭
+-> 인스턴스 변수의 초기화 : 기본값 -> 명시적 초기화 -> 인스턴스 초기화 블럭 -> 생성자
+
+
+0717
+오버로딩 : 기존에 없던 새로운 메서드를 정의
+오버라이딩 : 상속받은 메서드의 내용을 변경
+
+this() >> 생성자
+super() >> 조상 클래스의 생성자
+
+제어자 -  
+접근 제어자 : public protected default private
+그 외 : static final abstract native ...
+
+static - 클래스의 공통적인 : 멤버변수,메서드,초기화 블럭에 사용
+
+final - 마지막의 변경될 수 없는 : 클래스, 메서드, 멤버변수, 지역변수에 사용
+ 변수 >> 값을 변경할 수 없는 상수가 됨
+ 메서드 >> 오버라이딩을 통해 재정의 불가
+ 클래스 >> 다른 클래스의 조상이 될 수 없음
+
+abtract - 추상의 미완성의 : 클래스, 메서드에 사용
+ 다른 클래스가 이 클래스를 상속받아 일부의 원하는 메서드만 오버라이딩 해도 된다는 장점 존재
+  
+private - 같은 클래스 내에서만 접근 가능
+default - 같은 패키지 내에서만 접근 가능
+protected - 같은 패키지 내 & 자손 클래스에서 접근 가능
+public - 접근 제한 존재X
+접근 범위 순 : public > protected > (default) > private
+
+메서드에 static과 abstract를 함께 사용불가
+클래서에 abstract와 final 동시 사용 불가
+abstract메서드의 접근제어자가 private 불가
+메서드에 private와 final 동시 사용할 필요 X - private 메서드는 오버라이딩 X
+
+다형성 : 조상클래스 타입의 참조 변수로 자손클래스의 인스턴스를 참조 가능
+
+형변환 -
+자손타입 -> 조상 타입 : 업캐스팅 (형변환 생략 가능)
+자손타입 <- 조상 타입 : 다운캐스팅 (형변환 생략 불가)
+
+
+0723
+Package getPackage() : 패키지 정보 읽기
+String getSimpleName() : 패키지를 제외한 타입 이름
+String getName() : 패키지를 포함한 전체 타입 이름
+
+Constructor[] getDeclaredConstructors() : 생성자 정보 읽기
+Field[] getDeclaredFields() : 필드 정보 읽기
+Method[] getDeclaredMethods() : 메소드 정보 읽기
+
+isAnnotationPresent(Name.class) : 지정한 어노테이션이 적용되어 있는지 여부 -> 리턴타입 : boolean
+getAnnotation(Name.class) : 지정한 어노테이션이 적용되어 있으면 리턴, 아니면 null -> 리턴타입 : Annotaion
+getDeclaredAnnotations() : 적용된 모든 어노테이션을 리턴 -> 리턴타입 : Annotaion[]
+
+
+
+
+
+
+
+
+
