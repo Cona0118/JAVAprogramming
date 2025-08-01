@@ -1,0 +1,173 @@
+1. 다음은 자동차와 관련된 네 개의 클래스에 대한 설명이다.
+   각 클래스가 어떤 역할을 하는지, 어떤 관계를 가지는지를 읽고,
+   상속관계인지 포함 관계인지 판단하여 Car 클래스를 Java 코드로 완성하시오.
+   (Vehicle, Engine 클래스는 수정하지 않으며, 메서드와 생성자 내용은 생략함)
+
+   <클래스 설명>
+    Vehicle: 모든 탈것들의 공통적인 기능을 정의한다.
+    Car: 자동차를 정의하고 트렁크를 여는 기능을 가진다.
+    Engine: 엔진을 나타내며, 엔진의 종류(type)을 저장한다.
+
+    class Vehicle {
+        void startEngine() {}
+    }
+
+    class Engine {
+        String type;
+        Engine(String type) {}
+    }
+
+    class Car extends Vehicle {
+	Engine type;
+        void openTrunk() {}
+    }
+
+
+
+--------------------------------------------------------------------------------------
+
+2. 해당 내용의 출력내용을 작성하시오.
+class DeckTest {
+    public static void main(String[] args) {
+        Deck d = new Deck();
+        Card c = d.pick(0);   // 첫 번째 카드
+        System.out.println(c);
+
+        c = d.pick(51);       // 마지막 카드 (인덱스 51)
+        System.out.println(c);
+    }
+}
+
+class Deck {
+    final int CARD_NUM = 52;
+    Card[] cardArr = new Card[CARD_NUM];
+
+    Deck() {
+        int i = 0;
+        for (int k = Card.KIND_MAX; k > 0; k--) {
+            for (int n = 0; n < Card.NUM_MAX; n++) {
+                cardArr[i++] = new Card(k, n + 1);
+            }
+        }
+    }
+
+    Card pick(int index) {
+        return cardArr[index];
+    }
+}
+
+class Card {
+    static final int KIND_MAX = 4;
+    static final int NUM_MAX = 13;
+
+    static final int SPADE = 4;
+    static final int DIAMOND = 3;
+    static final int HEART = 2;
+    static final int CLOVER = 1;
+
+    final int kind;
+    final int number;
+
+    Card() {
+        this(SPADE, 1);
+    }
+
+    Card(int kind, int number) {
+        this.kind = kind;
+        this.number = number;
+    }
+
+    public String toString() {
+        String[] kinds = {"", "CLOVER", "HEART", "DIAMOND", "SPADE"};
+        String numbers = "0123456789XJQK";
+
+        return "kind: " + kinds[this.kind] + ", number: " + numbers.charAt(this.number);
+    }
+}
+
+<출력내용>
+kind: SPADE, number: 1
+kind: CLOVER, number: K
+
+
+
+--------------------------------------------------------------------------------------
+
+3. 다음에서 오류가 나는 부분을 찾아 수정하시오
+
+class PointTest {
+    public static void main(String[] args) {
+        Point3D p3 = new Point3D(1, 2, 3);
+        System.out.println(p3.getLocation()); // x: 1, y: 2, z: 3
+    }
+}
+
+class Point {
+    int x, y;
+
+    Point(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    String getLocation() {
+        return "x: " + x + ", y: " + y;
+    }
+}
+
+/*
+class Point3D {
+    int x, y, z;
+
+    Point3D(int x, int y, int z) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    }
+
+    String getLocation() {
+        return "x: " + x + ", y: " + y + ", z: " + z;
+    }
+}*/
+
+class Point3D extends Point {
+    int z;
+
+    Point3D(int x, int y, int z) {
+        Point(x, y);
+        this.z = z;
+    }
+
+    String getLocation() {
+        return "x: " + x + ", y: " + y + ", z: " + z;
+    }
+}
+
+
+--------------------------------------------------------------------------------------
+
+4. 다음 네 가지 접근 제어자의 접근 가능 범위를 아래의 기준에 따라 각각 서술하시오.
+
+클래스 내부
+
+같은 패키지
+
+하위 클래스
+
+외부(다른 패키지의 일반 클래스)
+
+1. public 모두 접근 가능
+2. private 클래스 내부에서만 접근 가능
+3. protected  같은 패키지 내 + 외부 자손 클래스에서 접근 가능
+4. default 같은 패키지 내에서 접근 가능
+
+
+--------------------------------------------------------------------------------------
+
+5. 다음 중 접근 제어자와 다른 키워드의 조합이 문법적으로 올바르지 않은 것을 고르시오. B
+
+A. public abstract class Shape
+B. private static int counter  
+C. protected final void log()
+D. private abstract void calculate()
+E. public final class Constants

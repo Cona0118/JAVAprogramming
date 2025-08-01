@@ -1,0 +1,90 @@
+박창현
+
+1. 다음은 카드 게임에서 사용되는 Card 클래스를 정의한 것이다.
+이 클래스에는 모든 카드에 공통적으로 적용되는 정보와 각 카드 객체마다 다른 값이 필요한 정보가 혼합되어 있다. 적절하게 코드가 작성될 수 있도록 클래스를 완성하시오.
+
+class Card {
+    (      ) String kind;      // 카드의 무늬 (예: "Heart", "Spade" 등)
+    (      ) int number;       // 카드의 숫자 (예: 1~13)
+    ( static ) int width = 100;  // 카드의 가로 길이
+    ( static ) int height = 250; // 카드의 세로 길이
+}
+
+2.아래에 정의된 Person 클래스를 읽고, 주어진 각 멤버(변수 및 메서드)의 종류를 알맞게 분류하시오.
+
+class Person {
+    String name;				// 인스턴스 변수
+    int age;					// 인스턴스 변수
+    static String species = "Human";	// 클래스 변수
+
+    void introduce() {			// 인스턴스 메서드
+        String greeting = "Hello!";	// 지역 변수
+        System.out.println(greeting + " My name is " + name + ".");
+    }
+
+    static void showSpecies() {		// 클래스 메서드
+        System.out.println("We are " + species + ".");
+    }
+}
+
+3. 아래 설명을 참고하여 메서드 선언부와 해당 메서드를 호출하는 코드를 완성하시오.
+음료수 두 개의 가격을 입력받아 총 금액을 계산하여 반환하는 메서드를 작성하고, 이 메서드를 호출하여 총액을 출력하는 프로그램을 작성하시오.
+
+public class DrinkShop {
+    public static void main(String[] args) {
+        int colaPrice = 1200;
+        int juicePrice = 1500;
+
+        // 메서드 호출하여 총액 계산
+        int total = calculateTotal(colaPrice, juicePrice);
+
+        System.out.println("총 금액: " + total + "원");
+    }
+
+    // 메서드 선언부
+    public static     calculateTotal( int x, int y ) {
+	return x+y;
+    }
+}
+
+
+4. 아래 실행 결과와 같이 출력되도록 change 메서드의 선언부와 본문, 그리고 main 메서드 내 호출 부분을 완성하시오.
+  <실행결과>
+  main(): x = 10
+  After change
+  main(): x = 1000
+
+class ReferenceParamEx {
+    public static void main(String[] args) {
+        Data d = new Data();
+        d.x = 10;
+
+        System.out.println("main(): x = " + d.x);
+
+        change(d);						//(3) change 메서드를 호출
+
+        System.out.println("After change");
+        System.out.println("main(): x = " + d.x);
+    }
+
+    static void change( Data d ) {  			// (4)
+	d.x = 1000; 					// (5) 변수에 1000의 값을 setting
+    }
+}
+
+5.다음 코드에서 빈칸에 알맞게 키워드를 넣거나 비워서 완성하시오.
+class MyMath2 {
+    long a, b;
+
+    () long add() { return a + b; }
+    () long subtract() { return a - b; }
+    () long multiply() { return a * b; }
+    () double divide() { return (double) a / b; }
+
+    (static) long add(long a, long b) { return a + b; }
+    (static) long subtract(long a, long b) { return a - b; }
+    (static) long multiply(long a, long b) { return a * b; }
+    (static) double divide(double a, double b) { return a / b; }
+}
+
+

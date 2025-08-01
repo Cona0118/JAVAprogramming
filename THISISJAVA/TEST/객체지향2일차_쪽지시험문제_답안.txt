@@ -1,0 +1,143 @@
+1. 
+public class MemberCall {
+    int iv = 10;
+    static int cv = 20;
+
+    int iv2 = cv;
+    // static int cv2 = iv; // 에러: 클래스 변수는 인스턴스 변수(iv)를 직접 사용할 수 없음
+    static int cv2 = new MemberCall().iv;
+
+    static void staticMethod1() {
+        System.out.println(cv);
+        // System.out.println(iv); // 에러: 클래스 메서드에서 인스턴스 변수(iv) 직접 접근 불가
+
+        MemberCall c = new MemberCall();
+        System.out.println(c.iv);
+    }
+
+    void instanceMethod1() {
+        System.out.println(cv);
+        System.out.println(iv);
+    }
+
+    static void staticMethod2() {
+        staticMethod1();
+        // instanceMethod1(); // 에러: 클래스 메서드에서 인스턴스 메서드(instanceMethod1) 직접 호출 불가
+
+        MemberCall c = new MemberCall();
+        c.instanceMethod1();
+    }
+
+    void instanceMethod2() {
+        staticMethod1();
+        instanceMethod1();
+    }
+}
+
+2.
+public class OverloadExample {
+    public void printInfo(String name) {
+        System.out.println("이름: " + name);
+    }
+
+    // 1. 나이만 출력하는 오버로딩
+    public void printInfo(int age) {
+        System.out.println("나이: " + age);
+    }
+
+    // 3. 매개변수 없이 "정보 없음" 출력하는 오버로딩
+    public void printInfo() {
+        System.out.println("정보 없음");
+    }
+}
+
+
+3.
+class Car {
+    String color;
+    String gearType;
+    int door;
+
+    Car() {}
+
+    Car(String color, String gearType, int door) {
+        this.color = color;
+        this.gearType = gearType;
+        this.door = door;
+    }
+}
+
+public class CarTest {
+    public static void main(String[] args) {
+        // 여기에 코드를 완성하시오.
+
+        Car c1 = new Car();         
+        c1.color = "black";           
+        c1.gearType = "auto";
+        c1.door = 4;
+
+        Car c2 = new Car("white", "auto", 4);  
+
+        System.out.println("c1의 color=" + c1.color + ", gearType=" + c1.gearType + ", door=" + c1.door);
+        System.out.println("c2의 color=" + c2.color + ", gearType=" + c2.gearType + ", door=" + c2.door);
+    }
+}
+
+4.
+public class CarTest {
+    public static void main(String[] args) {
+        Car c1 = new Car();
+        Car c2 = new Car("blue");
+
+        System.out.println("c1의 color=" + c1.color + ", gearType=" + c1.gearType + ", door=" + c1.door);
+        System.out.println("c2의 color=" + c2.color + ", gearType=" + c2.gearType);
+    }
+}
+
+class Car {
+    String color;
+    String gearType;
+    int door;
+
+    Car() {
+        this("white", "auto", 4);
+    }
+
+    Car(String color) {
+        this(color, "auto", 4);
+    }
+
+    Car(String color, String gearType, int door) {
+        this.color = color;
+        this.gearType = gearType;
+        this.door = door;
+    }
+}
+
+
+5.
+static { }
+BlockTest bt = new BlockTest();
+{ }
+생성자
+BlockTest bt2 = new BlockTest();
+{ }
+생성자
+
+6.
+class StaticBlockTest {
+    static int[] arr = new int[10];
+
+    static {
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = i + 1;
+        }
+    }
+
+    public static void main(String[] args) {
+        for (int i = 0; i < arr.length; i++) {
+            System.out.println("arr[" + i + "] : " + arr[i]);
+        }
+    }
+}
+
