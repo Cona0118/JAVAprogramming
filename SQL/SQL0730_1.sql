@@ -1,0 +1,235 @@
+USE SCOTT;
+
+-- 1.부서 번호 및 직책별 평균 급여를 출력합니다.
+SELECT	 DEPTNO, JOB, ROUND(AVG(SAL),2) AS AVG_SAL
+FROM 	 EMP
+GROUP BY DEPTNO, JOB
+ORDER BY DEPTNO, JOB;
+
+-- 2.중복을 제거한 급여의 평균 급여를 출력합니다.
+SELECT AVG(DISTINCT SAL)
+FROM   EMP;
+
+-- 3.부서 번호가 20이 사원의 입사일 중 제일 최근 입사일을 출력합니다.
+SELECT MAX(HIREDATE)
+FROM   EMP
+WHERE  DEPTNO = 20;
+
+-- 4.부서번호가 30인 사원중에서 추가수당의 값이 존재 하지 않는 사원은 몇명인지 출력합니다.
+SELECT COUNT(*)
+FROM   EMP
+WHERE  DEPTNO = 30
+AND    COMM IS NULL;
+
+-- 5.emp 테이블을 이용하여 부서번호, 평균급여, 최고급여, 최저급여, 사원수를 출력합니다.
+-- 단, 평균 급여를 출력할때 소수점을 제외하고 각 부서 번호별로 출력 하세요.(출력시, 부서번호별 내림차순 정렬)
+SELECT   DEPTNO               AS '부서번호', 
+		 TRUNCATE(AVG(SAL),0) AS '평균급여', 
+		 MAX(SAL)             AS '최고급여', 
+		 MIN(SAL)             AS '최저급여', 
+		 COUNT(*)             AS '사원 수'
+FROM     EMP
+GROUP BY DEPTNO
+ORDER BY DEPTNO DESC;
+
+-- 6.추가 수당을 받는 사원 수와 받지 않는 사원 수를 출력 하세요.
+-- (추가수당을 받지 않는 사원 수 출력시 컬럼명은 EXIST_COMM 이며, OX 의 값으로 표시한다)
+SELECT	 IF(COMM IS NULL OR COMM = 0,'X','O') AS EXIST_COMM,
+		 COUNT(*)
+FROM   	 EMP
+GROUP BY EXIST_COMM;
+
+-- 7.EMP 테이블에서 급여가 3000 이하인 사원들만을 대상으로 부서 번호와 직무별로 평균 급여를 계산하고, 이 평균 급여가 2000 이상인 부서와 직무 조합만 출력하려고 한다.
+-- 결과는 부서 번호와 직무를 기준으로 오름차순 정렬하며, 출력되는 컬럼은 부서 번호, 직무, 평균 급여이다.
+SELECT   DEPTNO, JOB, AVG(SAL)
+FROM 	 EMP
+WHERE 	 SAL <= 3000
+GROUP BY DEPTNO, JOB
+HAVING	 AVG(SAL) >= 2000
+ORDER BY DEPTNO, JOB;
+
+-- 8. 현재 시간을 출력 하세요.
+SELECT NOW();
+SELECT SYSDATE();
+
+-- ------------------------------CHAPTER 8-----------------------------------
+-- JOIN
+SELECT   *
+FROM     EMP, DEPT -- EMP 14개 행 하나하나에 DEPT 테이블 4개 행 모두 조합되어 출력됨 (56 rows)
+ORDER BY EMPNO;
+
+SELECT 	 *
+FROM   	 EMP E, DEPT D -- 테이블 명 별칭 지정
+WHERE 	 E.DEPTNO = D.DEPTNO  -- DEPTNO 열이 일치하는 데이터만 출력 (14 rows)
+ORDER BY EMPNO;
+
+SELECT   E.EMPNO, D.DNAME
+FROM     EMP E, DEPT D
+WHERE    E.DEPTNO = D.DEPTNO
+ORDER BY EMPNO;
+
+-- EQUI JOIN (등가 조인)
+SELECT E.EMPNO, E.ENAME, E.SAL, E.DEPTNO, D.DNAME, D.LOC 
+FROM   EMP E, DEPT D
+WHERE  E.DEPTNO = D.DEPTNO
+AND    SAL >= 3000;
+
+SELECT   E.EMPNO, E.ENAME, E.SAL, D.DEPTNO, D.DNAME, D.LOC
+FROM     EMP E, DEPT D
+WHERE    E.DEPTNO = D.DEPTNO
+AND      E.SAL <= 2500
+AND      E.EMPNO <= 9999
+ORDER BY E.EMPNO;
+
+-- NON-EQUI JOIN (비등가 조인)
+SELECT * FROM SALGRADE; -- 급여 등급의 범위가 저장된 테이블
+
+-- 범위를 지정하는 조건식으로 조인
+SELECT * 
+FROM   EMP E, SALGRADE S
+WHERE  E.SAL BETWEEN S.LOSAL AND S.HISAL;
+
+-- 자체 조인
+SELECT E1.EMPNO, E1.ENAME, E1.MGR,
+	   E2.EMPNO AS MGR_EMPNO,
+       E2.ENAME AS MGR_ENAME
+FROM   EMP E1, EMP E2
+WHERE  E1.MGR = E2.EMPNO; -- MGR 의 값이 NULL 인 데이터는 제외
+
+-- 외부 조인
+SELECT   E1.EMPNO, E1.ENAME, E1.MGR,
+	     E2.EMPNO AS MGR_EMPNO,
+         E2.ENAME AS MGR_ENAME
+FROM   	 EMP E1 
+	  LEFT OUTER JOIN EMP E2 ON (E1.MGR = E2.EMPNO)  # 왼쪽 외부 조인
+   -- WHERE E1.MGR = E2.EMPNO(+) # ORACLE 
+ORDER BY E1.EMPNO;
+ -- MGR이 NULL인 데이터도 포함
+
+SELECT   E1.EMPNO, E1.ENAME, E1.MGR,
+	     E2.EMPNO AS MGR_EMPNO,
+         E2.ENAME AS MGR_ENAME
+FROM   	 EMP E1 
+	  RIGHT OUTER JOIN EMP E2 ON (E1.MGR = E2.EMPNO)  # 오른쪽 외부 조인
+   -- WHERE E1.MGR(+) = E2.EMPNO # ORACLE 
+ORDER BY E1.EMPNO;
+ -- 본인을 MGR로 갖는 데이터가 없는 데이터도 포함
+
+-- NATURAL JOIN (등가조인)
+SELECT   E.EMPNO, E.ENAME, E.MGR, E.HIREDATE, E.SAL, E.COMM,
+	     DEPTNO, D.DNAME, D.LOC         -- DEPTNO에 테이블 이름 작성 x  
+FROM     EMP E NATURAL JOIN DEPT D      -- 자동으로 DEPTNO를 기준으로 등가 조인 
+ORDER BY DEPTNO, E.EMPNO;
+
+-- JOIN USING (등가조인)
+SELECT   E.EMPNO, E.ENAME, E.MGR, E.HIREDATE, E.SAL, E.COMM,
+	     DEPTNO, D.DNAME, D.LOC   		  -- DEPTNO에 테이블 이름 작성 x  
+FROM     EMP E JOIN DEPT D USING (DEPTNO) -- DEPTNO를 비교하는 WHERE절 대신 USING (기준열)
+WHERE    SAL >= 3000
+ORDER BY DEPTNO, E.EMPNO;
+
+SELECT   E.EMPNO, E.ENAME, E.JOB, E.MGR, E.HIREDATE, E.SAL, E.COMM,
+	     DEPTNO, D.DNAME, D.LOC
+FROM     EMP E JOIN DEPT D USING (DEPTNO)
+WHERE    SAL >= 3000
+AND      E.MGR IS NOT NULL
+ORDER BY DEPTNO, E.EMPNO;
+
+-- JOIN ON (등가조인)
+SELECT   E.EMPNO, E.ENAME, E.MGR, E.HIREDATE, E.SAL, E.COMM, E.DEPTNO, 
+	     D.DNAME, D.LOC     
+FROM     EMP E JOIN DEPT D ON (E.DEPTNO = D.DEPTNO) -- DEPTNO를 비교하는 WHERE절 대신 ON (조건식)
+WHERE    SAL <= 3000
+ORDER BY DEPTNO, E.EMPNO;
+
+-- 239P Q1 급여 2000 초과인 사원들의 부서 정보, 사원정보 출력
+SELECT   D.DEPTNO, D.DNAME, 
+		 E.EMPNO, E.ENAME, E.SAL
+FROM     DEPT D, EMP E
+WHERE    D.DEPTNO = E.DEPTNO
+AND      SAL > 2000
+ORDER BY DEPTNO;
+
+SELECT   DEPTNO, D.DNAME,
+	     E.EMPNO, E.ENAME, E.SAL
+FROM     DEPT D NATURAL JOIN EMP E
+WHERE    SAL > 2000
+ORDER BY DEPTNO;
+
+SELECT   DEPTNO, D.DNAME,
+	     E.EMPNO, E.ENAME, E.SAL
+FROM     DEPT D JOIN EMP E USING (DEPTNO)
+WHERE    SAL > 2000
+ORDER BY DEPTNO;
+
+SELECT   D.DEPTNO, D.DNAME,
+	     E.EMPNO, E.ENAME, E.SAL
+FROM     DEPT D JOIN EMP E ON (D.DEPTNO = E.DEPTNO)
+WHERE    SAL > 2000
+ORDER BY DEPTNO;
+
+-- Q2 부서별 평균 급여, 최대 급여, 최소 급여, 사원 수 출력
+SELECT   D.DEPTNO, D.DNAME,
+	     TRUNCATE(AVG(E.SAL),0) AS AVG_SAL,
+         TRUNCATE(MAX(E.SAL),0)	AS MAX_SAL,
+         TRUNCATE(MIN(E.SAL),0)	AS MIN_SAL,
+	     COUNT(*) 			    AS CNT
+FROM     DEPT D, EMP E
+WHERE    D.DEPTNO = E.DEPTNO
+GROUP BY D.DEPTNO, D.DNAME
+ORDER BY DEPTNO;
+
+SELECT DEPTNO,
+       D.DNAME,
+       TRUNCATE(AVG(SAL),0) AS AVG_SAL,
+       MAX(SAL) AS MAX_SAL,
+       MIN(SAL) AS MIN_SAL,
+       COUNT(*) AS CNT
+  FROM EMP E JOIN DEPT D USING (DEPTNO)
+GROUP BY DEPTNO, D.DNAME;
+
+-- Q3 모든 부서정보와 사원정보를 부서번호, 사원이름 순으로 정렬하여 출력
+SELECT D.DEPTNO, D.DNAME,
+	   E.EMPNO, E.ENAME, E.JOB, E.SAL
+FROM   DEPT D LEFT OUTER JOIN EMP E ON (D.DEPTNO = E.DEPTNO)
+ORDER BY DEPTNO, E.ENAME;
+
+-- Q4 모든 부서 정보, 사원 정보, 급여 등급 정보, 각 사원의 직속 상관 정보를 부서번호, 사원번호 순으로 정렬하여 출력
+SELECT D.DEPTNO, D.DNAME, 
+	   E1.EMPNO, E1.ENAME, E1.MGR, E1.SAL,
+	   E1.DEPTNO AS DEPTNO_1,
+       S.LOSAL, S.HISAL, S.GRADE,
+       E2.EMPNO AS MGR_MPNO,
+       E2.ENAME AS MGR_ENAME
+FROM DEPT D 
+LEFT OUTER JOIN EMP E1 ON (D.DEPTNO = E1.DEPTNO)
+LEFT OUTER JOIN SALGRADE S ON (E1.SAL BETWEEN S.LOSAL AND S.HISAL)
+LEFT OUTER JOIN EMP E2 ON (E1.MGR = E2.EMPNO)
+ORDER BY DEPTNO, EMPNO;
+
+-- ------------------------------CHAPTER 9-----------------------------------
+-- 서브 쿼리
+SELECT *
+FROM   EMP
+WHERE  SAL > (SELECT SAL FROM EMP WHERE ENAME = 'JONES');
+
+SELECT *
+FROM   EMP
+WHERE  COMM > (SELECT COMM FROM EMP WHERE ENAME = 'ALLEN');
+
+SELECT E.*, (SELECT DNAME FROM DEPT D WHERE D.DEPTNO = E.DEPTNO) AS DEPTNM
+FROM   EMP E;
+
+-- 20번 부서 사원 중 전체 사원의 평균 급여보다 높은 급여를 받는 사원의 사원 정보, 부서정보 출력
+SELECT *
+FROM   EMP E, DEPT D
+WHERE  E.DEPTNO = D.DEPTNO
+AND    E.DEPTNO = 20
+AND    E.SAL > (SELECT AVG(SAL) FROM EMP);
+
+-- 이름이 'SCOTT'인 사원 보다 일찍 입사한 사원들의 전체 정보
+SELECT *
+FROM   EMP
+WHERE  HIREDATE < (SELECT HIREDATE FROM EMP WHERE ENAME = 'SCOTT');
+
+
