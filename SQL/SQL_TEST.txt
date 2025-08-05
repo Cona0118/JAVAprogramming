@@ -1,0 +1,50 @@
+1.데이터 베이스에서 사용되는 SQL 분류 중 DDL/DML/DCL/TCL에 해당하는 SQL 명령어를 작성하시오.
+ DDL : CREATE, ALTER, RENAME, TRUNCATE, DROP
+ DML : SELECT, INSERT, UPDATE, DELETE
+ DCL : GRANT, REVOKE
+ TCL : COMMIT, ROLLBACK, SAVEPOINT
+
+2. 1에서 작성한 명령어들에 대해 설명하시오.
+DDL 
+CREATE	   - 테이블 생성 -> 테이블, 뷰, 인덱스 등의 객체 생성
+ALTER 	   - 테이블 구조 변경
+RENAME    - 테이블명 변경
+TRUNCATE  - 테이블 내의 데이터 삭제
+DROP	   - 테이블 삭제 -> 테이블, 뷰, 인덱스 등의 객체 삭제
+
+DML
+SELECT    - 데이터 조회
+INSERT    - 데이터 추가
+UPDATE    - 데이터 수정
+DELETE    - 데이터 삭제
+
+DCL
+GRANT     - 사용자에게 권한 부여
+REVOKE    - 권한 부여 취소
+
+TCL
+COMMIT    - 트랜잭션을 데이터베이스에 영구적으로 반영
+ROLLBACK  - 트랜잭션을 실행 전으로 되돌림
+SAVEPOINT - 트랜잭션 내에 롤백할 수 있는 지점을 생성
+
+3. DELETE와 TRUNCATE의 차이점에 대해서 설명하시오.
+DELETE는 행을 하나씩 지우기 때문에 트랜잭션 로그가 남아 COMMIT 전에는 ROLLBACK이 가능하지만
+TRUNCATE는 트랜잭션 로그가 남지 않아 ROLLBACK이 불가능함
+
+
+4. DML 명령어 SQL 구문을 형식에 맞게 작성하시오.(4개)
+- SELECT FROM WHERE
+SELET * FROM EMP WHERE DEPTNO = 10;
+
+- INSERT INTO VALUES
+INSERT INTO EMP (EMPNO, DEPTNO) VALUES (1234,10);
+
+- UPDATE SET WHERE
+UPDATE EMP SET DEPTNO = 10 WHERE SAL > 3000;
+
+- DELETE FROM WHERE
+DELETE FROM EMP WHERE DEPTNO = 10;
+
+ 
+ 
+ 
