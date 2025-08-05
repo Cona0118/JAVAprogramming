@@ -10,7 +10,7 @@ CREATE	   - 테이블 생성 -> 테이블, 뷰, 인덱스 등의 객체 생성
 ALTER 	   - 테이블 구조 변경
 RENAME    - 테이블명 변경
 TRUNCATE  - 테이블 내의 데이터 삭제
-DROP	   - 테이블 삭제 -> 테이블, 뷰, 인덱스 등의 객체 삭제
+DROP	     - 테이블 삭제 -> 테이블, 뷰, 인덱스 등의 객체 삭제
 
 DML
 SELECT    - 데이터 조회
@@ -47,4 +47,5 @@ DELETE FROM EMP WHERE DEPTNO = 10;
 
  
  
+
  
