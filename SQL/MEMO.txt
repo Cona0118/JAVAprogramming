@@ -35,7 +35,8 @@ UPDATE : 데이터 수정
 DELETE : 데이터 삭제
 	- DELETE {NAME} FROM [NAME] WHERE [조건];
  
-* TRUNCATE는 ROLLBACK으로 취소 불가, DELETE는 COMMIT 하기 전까지 가능
+* TRUNCATE는 트랜잭션 로그를 생성하지 않고, 롤백이 불가능
+  DELETE는 테이블 내의 행(row)을 하나씩 삭제하는 작업이기 때문에 데이터를 삭제할 때마다 트랜잭션 로그를 생성하고, 롤백(rollback)이 가능
 
 3. DCL
 GRANT : 권한 부여
