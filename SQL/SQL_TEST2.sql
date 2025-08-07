@@ -6,13 +6,12 @@ is_active: 정수형(TINYINT), 사용 여부 (1: 사용함, 0: 사용안함), �
 기본키는 (code_group, code)의 복합키로 한다. */
 
 CREATE TABLE COMMONCODE ( 
-	CODE_GROUP VARCHAR(20),
-	CODE INT,
-	CODE_NAME VARCHAR(50),
-	IS_ACTIVE TINYINT,
+    CODE_GROUP VARCHAR(20),
+    CODE INT,
+    CODE_NAME VARCHAR(50),
+    IS_ACTIVE TINYINT DEFAULT 1,
     PRIMARY KEY (CODE_GROUP, CODE)
 );
-
 
 /* -다음은 은행 고객 정보를 저장하는 Customer 테이블의 구조이다. 해당 테이블을 생성하는 SQL 문을 작성하시오.
 customer_id: 정수형, 기본키 (고객번호)
@@ -22,7 +21,7 @@ email: 문자열(최대 100자) (이메일)
 address: 문자열(최대 255자) (주소) */
 
 CREATE TABLE CUSTOMER (
-	CUSTOMER_ID INT PRIMARY KEY,
+    CUSTOMER_ID INT PRIMARY KEY,
     NAME VARCHAR(100),
     PHONE VARCHAR(20),
     EMAIL VARCHAR(100),
@@ -38,7 +37,7 @@ is_dormant: 정수형(TINYINT), 사용 여부 코드 (UseYn 그룹 참조), 기�
 opened_date: 날짜형 (개설일) */
 
 CREATE TABLE ACCOUNT (
-	ACCOUNT_ID INT PRIMARY KEY,
+    ACCOUNT_ID INT PRIMARY KEY,
     CUSTOMER_ID INT,
     ACCOUNT_TYPE_CODE INT,
     BALANCE DECIMAL(15,2),
@@ -56,7 +55,7 @@ amount: 소수점 둘째 자리까지의 숫자형(DECIMAL(15,2)) (금액)
 transaction_date: 일시형(DATETIME) (거래일시) */
 
 CREATE TABLE AccountTransaction (
-	TRANSACTION_ID INT PRIMARY KEY,
+    TRANSACTION_ID INT PRIMARY KEY,
     ACCOUNT_ID INT,
     TRANSACTION_TYPE VARCHAR(10),
     AMOUNT DECIMAL(15,2),
@@ -73,7 +72,7 @@ interest_rate: 소수점 둘째 자리까지의 숫자형(DECIMAL(5,2)), 이자�
 due_date: 날짜형 (상환예정일) */
 
 CREATE TABLE LOAN (
-	LOAN_ID INT PRIMARY KEY,
+    LOAN_ID INT PRIMARY KEY,
     ACCOUNT_ID INT,
     LOAN_AMOUNT DECIMAL(15,2),
     INTEREST_RATE DECIMAL(5,2),
@@ -92,10 +91,10 @@ CREATE TABLE LOAN (
 
 INSERT INTO CUSTOMER 
 VALUES  (1, '홍길동', '010-1111-2222', 'hong@example.com', '서울특별시 강남구'),
-		(2, '김영희', '010-2222-3333',  'kim@example.com', '부산광역시 해운대구'),
-		(3, '이철수', '010-3333-4444',  'lee@example.com', '대전광역시 서구'),
-		(4, '박지민', '010-4444-5555', 'park@example.com', '광주광역시 남구'),
-		(5, '최수민', '010-5555-6666', 'choi@example.com', '인천광역시 남동구');
+	(2, '김영희', '010-2222-3333',  'kim@example.com', '부산광역시 해운대구'),
+	(3, '이철수', '010-3333-4444',  'lee@example.com', '대전광역시 서구'),
+	(4, '박지민', '010-4444-5555', 'park@example.com', '광주광역시 남구'),
+	(5, '최수민', '010-5555-6666', 'choi@example.com', '인천광역시 남동구');
         
         
 /* -계좌 정보
@@ -110,13 +109,13 @@ VALUES  (1, '홍길동', '010-1111-2222', 'hong@example.com', '서울특별시 �
   
 INSERT INTO ACCOUNT 
 VALUES  (101, 1, 10,   1500000, 0, '2020-01-15'),
-		(102, 1, 15,   5000000, 0, '2022-03-01'),
-		(103, 2, 10, 	200000, 1, '2019-11-20'),
-		(104, 3, 20, -10000000, 0, '2021-06-10'),
-		(106, 2, 10, 	750000, 0, '2023-09-10'),
-		(107, 4, 10, 	300000, 0, '2023-01-10'),
-		(108, 4, 15, 	600000, 0, '2023-05-20'),
-		(109, 2, 10,    	 0, 0, '2009-12-31' );
+	(102, 1, 15,   5000000, 0, '2022-03-01'),
+	(103, 2, 10, 	200000, 1, '2019-11-20'),
+	(104, 3, 20, -10000000, 0, '2021-06-10'),
+	(106, 2, 10, 	750000, 0, '2023-09-10'),
+	(107, 4, 10, 	300000, 0, '2023-01-10'),
+	(108, 4, 15, 	600000, 0, '2023-05-20'),
+	(109, 2, 10,    	 0, 0, '2009-12-31' );
 
 
 /* -거래 내역
@@ -133,15 +132,15 @@ VALUES  (101, 1, 10,   1500000, 0, '2020-01-15'),
 
 INSERT INTO ACCOUNTTRANSACTION 
 VALUES  (1, 101, '입금', 1000000, '2025-08-01 10:00:00'),
-		(2, 101, '출금',  200000, '2025-08-03 15:30:00'),
-		(3, 102, '입금', 5000000, '2025-07-01 09:00:00'),
-		(4, 103, '출금',   50000, '2024-12-25 11:00:00'),
-		(5, 104, '입금(대출 상환)', 1000000, '2025-08-01 13:00:00'),
-		(6, 101, '입금',  300000, '2024-03-10 12:00:00'),
-		(7, 102, '출금', 1000000, '2024-11-05 14:00:00'),
-		(8, 106, '입금',  100000, '2025-01-01 10:00:00'),
-		(9, 106, '출금',   50000, '2025-02-01 10:00:00'),
-		(10, 106, '입금', 200000, '2025-03-01 10:00:00');
+	(2, 101, '출금',  200000, '2025-08-03 15:30:00'),
+	(3, 102, '입금', 5000000, '2025-07-01 09:00:00'),
+	(4, 103, '출금',   50000, '2024-12-25 11:00:00'),
+	(5, 104, '입금', 1000000, '2025-08-01 13:00:00'),
+	(6, 101, '입금',  300000, '2024-03-10 12:00:00'),
+	(7, 102, '출금', 1000000, '2024-11-05 14:00:00'),
+	(8, 106, '입금',  100000, '2025-01-01 10:00:00'),
+	(9, 106, '출금',   50000, '2025-02-01 10:00:00'),
+	(10, 106, '입금', 200000, '2025-03-01 10:00:00');
 
 
 /* -대출 정보
@@ -164,20 +163,21 @@ VALUES (1, 104, 10000000, 3.5, '2026-12-31');
 
 INSERT INTO COMMONCODE 
 VALUES  ('AccountType', 10, '보통예금', 1),
-		('AccountType', 15,    '적금', 1),
-		('AccountType', 18,    '예금', 1),
-		('AccountType', 20,    '대출', 1),
-		('AccountType', 30,    '펀드', 0), 
-		(      'UseYn',  0, '사용안함', 1),
-		(	   'UseYn',  1,  '사용함', 1);
+	('AccountType', 15,    '적금', 1),
+	('AccountType', 18,    '예금', 1),
+	('AccountType', 20,    '대출', 1),
+	('AccountType', 30,    '펀드', 0), 
+	(      'UseYn',  0, '사용안함', 1),
+	(      'UseYn',  1,  '사용함', 1);
         
 	
 /* 3. 모든 고객의 정보를 조회하되, 계좌가 있는 고객은 계좌 정보도 함께 보여주시오.
 ※ 계좌가 없는 고객도 결과에 포함되어야 하며, 각 고객의 이름, 계좌번호, 계좌종류코드, 잔액을 출력하시오.
 단, 잔액이 많은 순으로 정렬하시오. */
 
-SELECT C.*, A.ACCOUNT_ID, A.ACCOUNT_TYPE_CODE, A.BALANCE 
-FROM CUSTOMER C LEFT JOIN ACCOUNT A USING (CUSTOMER_ID)
+SELECT C.NAME, A.ACCOUNT_ID, A.ACCOUNT_TYPE_CODE, A.BALANCE 
+FROM CUSTOMER C 
+LEFT JOIN ACCOUNT A USING (CUSTOMER_ID)
 ORDER BY BALANCE DESC;
 
 
@@ -186,9 +186,27 @@ CommonCode 테이블을 활용하여 계좌 유형명(code_name)을 출력하고
 
 SELECT A.*, C.CODE_NAME
 FROM ACCOUNT A 
-	 JOIN (SELECT * FROM COMMONCODE WHERE CODE_GROUP = 'ACCOUNTTYPE') C
-	 ON A.ACCOUNT_TYPE_CODE =  C.CODE 
+JOIN (SELECT * FROM COMMONCODE WHERE CODE_GROUP = 'ACCOUNTTYPE') C
+ON A.ACCOUNT_TYPE_CODE =  C.CODE 
 ORDER BY BALANCE DESC;
+
+# 답
+SELECT 
+    a.account_id,
+    a.customer_id,
+    a.account_type_code,
+    (
+        SELECT cc.code_name
+        FROM CommonCode cc
+        WHERE cc.code_group = 'AccountType'
+          AND cc.code = a.account_type_code
+    ) AS account_type_name,
+    a.balance
+FROM 
+    Account a
+ORDER BY 
+    a.balance DESC;
+
 
 /* 5. 모든 계좌에 대해 계좌번호, 거래 횟수, 거래 총액을 조회하시오.
 거래 내역이 없는 계좌도 결과에 포함되어야 하며, 거래 횟수는 0으로 표시하시오.
@@ -197,8 +215,8 @@ ORDER BY BALANCE DESC;
 결과는 계좌번호 오름차순으로 정렬하시오. */
 
 SELECT ACCOUNT_ID AS '계좌 번호', 
-	   COUNT(TRANSACTION_ID) AS '거래 횟수', 
-	   SUM(IFNULL(AMOUNT,0)) AS '거래 총액'
+       COUNT(TRANSACTION_ID) AS '거래 횟수', 
+       SUM(IFNULL(AMOUNT,0)) AS '거래 총액'  # ==  IFNULL(SUM(AMOUNT,0))
 FROM ACCOUNT LEFT JOIN ACCOUNTTRANSACTION USING(ACCOUNT_ID)
 GROUP BY ACCOUNT_ID
 HAVING COUNT(TRANSACTION_ID) >= 3 
@@ -212,7 +230,7 @@ ORDER BY ACCOUNT_ID;
 결과는 계좌 잔액을 기준으로 내림차순 정렬하며, 잔액이 같으면 고객 이름을 기준으로 오름차순 정렬한다. */
 
 SELECT   C.NAME, C.EMAIL, A.ACCOUNT_ID, A.BALANCE
-FROM     CUSTOMER C NATURAL JOIN ACCOUNT A
+FROM     CUSTOMER C NATURAL JOIN ACCOUNT A  # == FROM Customer c, Account a WHERE c.customer_id = a.customer_id
 WHERE    BALANCE >= 1000000
 ORDER BY BALANCE DESC, NAME;
 
@@ -221,8 +239,19 @@ ORDER BY BALANCE DESC, NAME;
 (계좌번호,잔액의 내용과 같이 출력) */
 
 SELECT ACCOUNT_ID, BALANCE, 
-	IF (BALANCE>=1000000, '우량 고객', IF(BALANCE>=500000, '보통 고객', '관심 고객'))
+       IF (BALANCE>=1000000, '우량 고객', IF(BALANCE>=500000, '보통 고객', '관심 고객')) AS 'CUSTOMER_GRADE'
 FROM   ACCOUNT;
+  # == 
+SELECT 
+    account_id,
+    balance,
+    CASE
+        WHEN balance >= 1000000 THEN '우량 고객'
+        WHEN balance >= 500000 THEN '보통 고객'
+        ELSE '관심 고객'
+    END AS customer_grade
+FROM 
+    Account;
 
 
 /* 8. 특정 고객 ‘홍길동’이 2024년 1월 1일부터 2024년 12월 31일 사이에 거래한 계좌별로, 계좌 번호와 해당 기간 내 마지막 거래 일자를 조회하시오.
@@ -230,13 +259,23 @@ FROM   ACCOUNT;
 거래일자는 '2024-01-01'부터 '2024-12-31' 범위 내여야 한다.
 결과는 마지막 거래 일자 내림차순으로 정렬하시오. */
 
-SELECT 	 AT.ACCOUNT_ID, MAX(AT.TRANSACTION_DATE)
+SELECT 	 A.ACCOUNT_ID, MAX(AT.TRANSACTION_DATE)
 FROM   	 ACCOUNTTRANSACTION AT 
-JOIN     ACCOUNT USING (ACCOUNT_ID)
-JOIN 	 CUSTOMER USING (CUSTOMER_ID)
+JOIN     ACCOUNT A USING (ACCOUNT_ID)
+JOIN 	 CUSTOMER C USING (CUSTOMER_ID)
 WHERE    NAME = '홍길동'
-GROUP BY ACCOUNT_ID
+GROUP BY A.ACCOUNT_ID
 HAVING   MAX(AT.TRANSACTION_DATE) BETWEEN '2024-01-01' AND '2024-12-31'
+ORDER BY MAX(AT.TRANSACTION_DATE) DESC;
+
+# 답
+SELECT 	 A.ACCOUNT_ID, MAX(AT.TRANSACTION_DATE)
+FROM   	 ACCOUNTTRANSACTION AT 
+JOIN     ACCOUNT A USING (ACCOUNT_ID)
+JOIN 	 CUSTOMER C USING (CUSTOMER_ID)
+WHERE    NAME = '홍길동'
+AND      AT.TRANSACTION_DATE BETWEEN '2024-01-01' AND '2024-12-31'
+GROUP BY A.ACCOUNT_ID
 ORDER BY MAX(AT.TRANSACTION_DATE) DESC;
 
 
@@ -252,13 +291,20 @@ AND    BALANCE = 0;
 
 DELETE FROM ACCOUNT
 WHERE ACCOUNT_ID IN (SELECT ACCOUNT_ID
-					   FROM (SELECT    ACCOUNT_ID
-							 FROM      ACCOUNT 
-							 LEFT JOIN ACCOUNTTRANSACTION USING (ACCOUNT_ID) 
-							 WHERE     OPENED_DATE < '2020-01-01'
-							 GROUP BY  ACCOUNT_ID 
-							 HAVING    COUNT(TRANSACTION_ID) = 0) A);
-					 
+		     FROM (SELECT    ACCOUNT_ID
+			   FROM      ACCOUNT 
+			   LEFT JOIN ACCOUNTTRANSACTION USING (ACCOUNT_ID) 
+			   WHERE     OPENED_DATE < '2020-01-01'
+			   GROUP BY  ACCOUNT_ID 
+			   HAVING    COUNT(TRANSACTION_ID) = 0) A);
+# 답
+DELETE FROM Account
+WHERE opened_date < '2020-01-01'
+  AND account_id NOT IN (
+      SELECT DISTINCT account_id FROM AccountTransaction
+  );
+
+
 /*
 11.  데이터 사전(Data Dictionary)에 대한 설명으로 옳은 것은? B
 A.데이터 사전은 일반 사용자도 자유롭게 수정할 수 있다.
