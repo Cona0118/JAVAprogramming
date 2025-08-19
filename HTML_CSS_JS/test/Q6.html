@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>간단한 설문 폼</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+      color: #333;
+    }
+    label {
+      display: block;
+      margin: 8px 0 4px;
+      font-weight: bold;
+    }
+    input[type="text"],
+    textarea {
+      width: 200px;
+      padding: 6px;
+      margin-bottom: 12px;
+      box-sizing: border-box;
+    }
+    input[type="checkbox"], input[type="radio"] {
+      width: auto;
+      margin-right: 6px;
+      display: inline-block;
+    }
+    .group-title {
+      font-weight: bold;
+      margin-top: 16px;
+    }
+    .checkbox-group label,
+    .radio-group label {
+      display: inline-block;
+      font-weight: normal;
+      margin-right: 12px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <form>
+    <label for="name">이름:</label>
+    <input>
+
+    <p class="group-title">좋아하는 과일:</p>
+    <div class="checkbox-group">
+      <input type="checkbox" id="apple" name="fruit" value="ap">
+        <label for="apple">사과</label>
+      <input type="checkbox" id="banana" name="fruit" value="ba">
+        <label for="banana">바나나</label>
+      <input type="checkbox" id="orange" name="fruit" value="or">
+        <label for="orange">오렌지</label>
+    </div>
+
+    <p class="group-title">성별:</p>
+    <div class="radio-group">
+      <input type="radio" id="male" name="gender" value="m">
+        <label for="male">남자</label>
+      <input type="radio" id="female" name="gender" value="f"> 
+        <label for="female">여자</label>
+    </div>
+    <label for="opinion">의견:</label>
+    <textarea></textarea> <br>
+    <input type="submit"> 
+    <input type="reset">
+  </form>
+</body>
+</html>

@@ -1,0 +1,162 @@
+1-A : main태그
+1-B : header태그
+1-C : aside태그
+1-D : footer태그
+
+2. html/head/body
+
+3.
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>간단한 시간표</title>
+  <style>
+    table {
+      border-collapse: collapse; 
+    }
+    table, th, td {
+      border: 1px solid black; /* 테두리 지정 */
+      padding: 10px; /* 셀 안 여백 */
+    }
+  </style>
+</head>
+<body>
+  <table>
+    <caption>2학기 시간표</caption>
+    <tr>
+      <th></th>
+      <th>월</th>
+      <th>화</th>
+      <th>수</th>
+    </tr>
+    <tr>
+      <td>1교시</td>
+      <td colspan="2">국어</td>
+      <td>수학</td>
+    </tr>
+    <tr>
+      <td>2교시</td>
+      <td>영어</td>
+      <td>미술</td>
+      <td rowspan="2">체육</td>
+    </tr>
+    <tr>
+      <td>3교시</td>
+      <td>사회</td>
+      <td>과학</td>
+    </tr>
+  </table>
+</body>
+</html>
+
+4. <img src="../images/table.png" alt="시간표 이미지">
+
+5.
+A. method
+B. action
+C. target
+D. name
+
+6.
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>간단한 설문 폼</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+      color: #333;
+    }
+    label {
+      display: block;
+      margin: 8px 0 4px;
+      font-weight: bold;
+    }
+    input[type="text"],
+    textarea {
+      width: 200px;
+      padding: 6px;
+      margin-bottom: 12px;
+      box-sizing: border-box;
+    }
+    input[type="checkbox"], input[type="radio"] {
+      width: auto;
+      margin-right: 6px;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .group-title {
+      font-weight: bold;
+      margin-top: 16px;
+    }
+
+    /* 체크박스/라디오 그룹 한 줄 정렬 */
+    .checkbox-group,
+    .radio-group {
+      display: flex;
+      gap: 12px;
+      flex-wrap: nowrap;
+      align-items: center;
+    }
+
+    .checkbox-group label,
+    .radio-group label {
+      display: flex;
+      align-items: center;
+      font-weight: normal;
+      cursor: pointer;
+    }
+
+    button {
+      padding: 6px 12px;
+      margin-right: 8px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .button-group {
+      margin-top: 12px;
+    }
+  </style>
+</head>
+<body>
+  <form>
+    <label for="name">이름:</label>
+    <input type="text" id="name" name="name" />
+
+    <p class="group-title">좋아하는 과일:</p>
+    <div class="checkbox-group">
+      <label for="apple">
+        <input type="checkbox" id="apple" name="fruit" value="apple" /> 사과
+      </label>
+      <label for="banana">
+        <input type="checkbox" id="banana" name="fruit" value="banana" /> 바나나
+      </label>
+      <label for="orange">
+        <input type="checkbox" id="orange" name="fruit" value="orange" /> 오렌지
+      </label>
+    </div>
+
+    <p class="group-title">성별:</p>
+    <div class="radio-group">
+      <label for="male">
+        <input type="radio" id="male" name="gender" value="male" /> 남자
+      </label>
+      <label for="female">
+        <input type="radio" id="female" name="gender" value="female" /> 여자
+      </label>
+    </div>
+
+    <label for="opinion">의견:</label>
+    <textarea id="opinion" name="opinion" rows="4"></textarea>
+
+    <div class="button-group">
+      <button type="submit">제출</button>
+      <button type="reset">초기화</button>
+    </div>
+  </form>
+</body>
+</html>
