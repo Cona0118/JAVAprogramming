@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>연습문제 2</title>
+</head>
+<body>
+	<script>
+		function numVS(a,b){
+			if(a>b){
+				alert(`${a}가 ${b}보다 큽니다.`);
+			}
+			else if(b>a){
+				alert(`${b}가 ${a}보다 큽니다.`);
+			}
+			else{
+				alert("두 수가 같습니다.");
+			}
+		}
+
+		let num1 = parseInt(prompt("비교할 첫 번째 숫자:"));
+		let num2 = parseInt(prompt("비교할 두 번째 숫자:"));
+
+		numVS(num1,num2);
+	</script>
+</body>
+</html>
