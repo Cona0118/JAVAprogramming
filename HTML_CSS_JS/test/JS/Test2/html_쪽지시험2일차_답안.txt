@@ -1,0 +1,31 @@
+1. <script src="../scripts/app.js"></script>
+
+2. const name = prompt("이름을 입력하세요:");
+alert("안녕하세요, " + name + "님!");
+
+3. const answer = confirm("이 페이지를 보시겠습니까?");
+
+if (answer) {
+    document.write("환영합니다!");
+} else {
+    document.write("다음에 다시 방문해주세요.");
+}
+
+4. console.log("이름: 홍길동\n나이: 20세\n한 줄에 \"큰따옴표\"를 출력할 수 있어요.");
+
+5.
+const users = ["홍길동", "김민수", "이영희"];
+
+for (let i = 0; i < users.length; i++) {
+    console.log(`${i + 1}번째 사용자: ${users[i]}`);
+}
+
+6.
+(1) 출력값: 20 — var a는 함수 스코프라 if 블록 내 재선언과 할당이 함수 전체에 영향을 줌
+(2) 출력값: 3 — let b는 블록 스코프라 if 블록 내부에서 별도로 선언된 변수임
+(3) 출력값: 40 — var c도 함수 스코프라 if 블록 내 재선언 및 값 변경이 전체에 영향
+(4) 출력값: 4 — let d는 블록 스코프라 if 블록 내에서만 존재
+(5) 출력값: 20 — var a는 함수 전체에서 하나의 변수, 값은 20으로 변경됨
+(6) 출력값: 2 — 함수 스코프의 let b, if 블록 밖에서는 내부 b가 아닌 외부 b가 출력됨
+(7) 출력값: 40 — var c는 함수 스코프라 어디서든 접근 가능하며 값은 40
+(8) 출력값: ReferenceError — let d는 블록 스코프라 if 블록 밖에서는 접근 불가
