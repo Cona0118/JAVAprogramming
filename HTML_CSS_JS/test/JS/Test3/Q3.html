@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>Q3</title>
+</head>
+<body>
+  <button>눌러보세요</button>
+
+  <div id="message"></div>
+
+  <script>
+    let button = document.querySelector("button");
+
+    button.addEventListener("click", function(){
+      let page = document.querySelector("#message");
+
+      page.textContent = "버튼이 클릭되었습니다."; // page.innerText
+    });
+  </script>
+</body>
+</html>

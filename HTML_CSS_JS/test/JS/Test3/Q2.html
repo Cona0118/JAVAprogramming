@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>Q2</title>
+</head>
+<body>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function(){
+      let name = prompt("이름을 입력하세요: ");
+
+      if (name !== null && name !== ""){ // name.trim() : 공백제거
+        document.write(`안녕하세요? ${name}님`);
+      } else {
+        document.write("이름을 입력하지 않으셨습니다.");
+      }
+    });
+  </script>
+</body>
+</html>

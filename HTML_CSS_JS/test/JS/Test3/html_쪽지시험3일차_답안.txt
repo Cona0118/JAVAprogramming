@@ -1,0 +1,130 @@
+1.
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>덧셈 프로그램</title>
+</head>
+<body>
+  <button onclick="calculateSum()">계산하기</button>
+
+  <script>
+    function calculateSum() {
+      const input1 = prompt("첫 번째 숫자:");
+      const input2 = prompt("두 번째 숫자:");
+
+      const num1 = Number(input1);
+      const num2 = Number(input2);
+
+      const sum = num1 + num2;
+
+      alert(`두 수의 합은 ${sum}입니다.`);
+    }
+  </script>
+</body>
+</html>
+
+
+2.
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>인사 프로그램</title>
+</head>
+<body>
+
+  <div id="greeting"></div>
+
+  <script>
+    (function() {
+      const name = prompt("이름을 입력하세요:");
+
+      let message = "";
+
+      if (name === null || name.trim() === "") {
+        message = "이름을 입력하지 않으셨습니다.";
+      } else {
+        message = `안녕하세요? ${name}님`;
+      }
+
+      document.getElementById("greeting").innerText = message;
+    })();
+  </script>
+
+</body>
+</html>
+
+
+3.
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>이벤트 직접 연결 예제</title>
+</head>
+<body>
+
+  <button id="clickBtn">눌러보세요</button>
+  <div id="result"></div>
+
+  <script>
+    document.getElementById("clickBtn").addEventListener("click", () => {
+      document.getElementById("result").innerText = "버튼이 클릭되었습니다.";
+    });
+  </script>
+
+</body>
+</html>
+
+
+4.
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>창 이름 지정 열기</title>
+</head>
+<body>
+
+  <button id="openPageBtn">페이지 열기</button>
+
+  <script>
+    document.getElementById("openPageBtn").addEventListener("click", () => {
+      window.open("../../popup/optionPage.html", "optionWindow");
+    });
+  </script>
+
+</body>
+</html>
+
+
+5.
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>querySelector 다양한 선택자</title>
+</head>
+<body>
+
+  <h1 id="title">안녕하세요!</h1>
+  <p class="desc">설명문구입니다.</p>
+  <button>클릭하세요</button>
+
+  <script>
+    // id 선택자
+    const titleEl = document.querySelector('#title');
+    // class 선택자
+    const descEl = document.querySelector('.desc');
+    // 태그 선택자
+    const btnEl = document.querySelector('button');
+
+    btnEl.addEventListener('click', () => {
+      titleEl.innerText = "환영합니다!";
+      descEl.innerText = "버튼이 클릭되었습니다.";
+    });
+  </script>
+
+</body>
+</html>
