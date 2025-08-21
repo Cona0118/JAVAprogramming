@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>JQ</title>
+  <script src="jquery-3.7.1.min.js"></script>
+  <script>
+    function move(obj, time){
+      $(obj).stop().animate({
+        left:-450,
+        top:0
+      }, time);
+    }
+    function back(css){
+      $(css).stop().animate({
+        left:0,
+        top:0
+      });
+    }
+  </script>
+  <style> 
+    .moving {
+        border:1px solid #000000;
+        margin: 20px auto 0 auto;
+        text-align: right;
+        width: 550px;
+    }
+    .moving img {
+        cursor: pointer;
+        position: relative; 
+        width: 100px;
+        height: 100px;
+    }
+  </style>
+</head>
+<body>
+  <div class="init">
+    <button type="button" onclick="back('.moving img')">초기화 상태</button><br>
+  </div>
+  <div class="moving">
+    <img onclick="move(this, 6000)" src="image/pic1.png"/><br>
+    <img onclick="move(this, 3000)" src="image/pic2.png"/><br>
+    <img onclick="move(this, 1000)" src="image/pic3.png"/><br>
+  </div>
+</body>
+
+</html>

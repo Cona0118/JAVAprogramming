@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>JQ04</title>
+  <script src="jquery-3.7.1.min.js"></script>
+  <script>
+    let n = 0;
+    $(document).ready(function(){
+      $("div.out").mouseenter(function(){
+        $("p:first", this).text("마우스포인트가 들어옴");
+        $("p:last",this).text(++n);
+      });
+    });
+  </script>
+  <style>
+    div.out {
+      width: 200px;
+      height: 100px;
+      border:1px solid #000000;
+      text-align: center;
+      background-color: yellow;
+    }
+  </style>
+</head>
+<body>
+  <div class="out">
+    <p>마우스 이벤트 알아보기</p>
+    <p>0</p>
+  </div>
+</body>
+</html>

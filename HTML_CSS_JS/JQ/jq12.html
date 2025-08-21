@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>JQ12</title>
+  <script src="jquery-3.7.1.min.js"></script>
+  <script>
+    $(document).ready(function(){
+      $("button.move").click(function(){
+        $("img").animate({
+          "width":"390px",
+          "height":"300px",
+          "left":"300px"
+        });
+      });
+      $("button.init").click(function(){
+        $("img").animate({
+          "width":"130px",
+          "height":"100px",
+          "left":"10px"
+        });
+      });
+    });
+
+  </script>
+</head>
+<body>
+<button class="move">확대</button>
+<button class="init">축소</button>
+<p></p>
+<img name="pic1" src="image/pic1.png" width="130" height="100" style="position:relative"/>
+</body>
+</html>

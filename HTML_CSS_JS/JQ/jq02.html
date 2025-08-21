@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>JQ02</title>
+  <script src="jquery-3.7.1.min.js"></script>
+  <script>
+    $(document).ready(function(){
+      $("button.hide").click(function(){
+        $("p").hide();
+      });
+      $("button.show").click(function(){
+        $("p").show();
+      });
+    });
+  </script>
+</head>
+<body>
+  <p>문서 준비~~~</p>
+  <p>버튼을 클릭하면~~</p>
+  <button class="hide">메시지 삭제</button>
+  <button class="show">메시지 보기</button>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>JQ13</title>
+  <script src="jquery-3.7.1.min.js"></script>
+  <script>
+    $(document).ready(function(){
+      $("button#hide").click(function(){
+        $("img").hide("slow");
+      });
+      $("button#show").click(function(){
+        $("img").show("fast");
+      });
+      $("button#toggle").click(function(){
+        $("img").toggle(10000);
+      });
+    });
+  </script>
+</head>
+<body>
+  <button id="hide">hide</button>
+  <button id="show">show</button>
+  <button id="toggle">toggle</button>
+  <p></p>
+  <img name="pic1" src="image/pic1.png"/>
+</body>
+</html>
