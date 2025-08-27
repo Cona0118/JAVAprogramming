@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>주문 화면</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 450px;
+      margin: 0 auto;
+    }
+
+    td {
+      padding: 8px;
+      vertical-align: middle;
+      border: 1px solid black
+    }
+
+    input[type="text"],
+    input[type="number"],
+    input[type="email"],
+    textarea {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 5px;
+    }
+
+    .btn {
+      padding: 6px 12px;
+      margin-left: 5px;
+      cursor: pointer;
+    }
+
+    .buttons {
+      text-align: center;
+    }
+
+    .disabled {
+      background-color: #ccc !important;
+      color: #888 !important;
+      cursor: not-allowed !important;
+      pointer-events: none;
+    }
+
+    #orderBtn {
+      background-color: #2196F3;
+      color: white;
+      border: none;
+    }
+
+    .input-group {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .input-group input {
+      flex: 1;
+    }
+
+    .price-info {
+      text-align: right;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+  </style>
+</head>
+<body>
+  <form id="orderForm">
+    <table>
+      <h2>상품 주문</h2>
+      <tr>
+        <td>상품명</td>
+        <td>
+          <input id="itemName" type="text" value="무선 이어폰" readonly>
+        </td>
+      </tr>
+      <tr>
+        <td>가격</td>
+        <td>59900 원</td>
+      </tr>
+      <tr>
+        <td>수량</td>
+        <td>
+          <input id="number" type="number" value="1" required>
+        </td>
+      </tr>
+      <tr>
+        <td>총 금액</td>
+        <td><div id="totalPrice"></div></td>
+      </tr>
+      <tr>
+        <td>배송 주소</td>
+        <td>
+          <input id="address" type="text" style="width: 71%;" readonly>
+          <input type="button" class="btn" value="주소검색" onclick="addressPopup()" >
+        </td>
+      </tr>
+      <tr>
+        <td>결제 수단</td>
+        <td>
+          <label><input type="radio" name="buyMethod" value="1" required> 신용카드</label><br>
+          <label><input type="radio" name="buyMethod" value="2"> 계좌이체</label><br>
+          <label><input type="radio" name="buyMethod" value="3"> 간편결제</label>
+        </td>
+      </tr>
+      <tr>
+        <td>이메일</td>
+        <td>
+          <input id="email" type="email" required>
+        </td>
+      </tr>
+      <tr>
+        <td>배송 요청사항</td>
+        <td>
+          <textarea id="request" placeholder="요청사항을 입력하세요 (선택)"></textarea>
+        </td>
+      </tr>
+      <tr>
+        <td>약관 동의</td>
+        <td>
+          <input type="checkbox" name="permission" value="yes" required> 구매 약관에 동의합니다.
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2" class="buttons">
+          <input type="submit" class="btn" id="orderBtn" value="주문하기">
+          <input type="reset" class="btn">
+        </td>
+      </tr>
+    </table>
+  </form>
+  <script>
+    document.querySelector("#totalPrice").textContent = (59900).toLocaleString() +" 원";
+
+    document.addEventListener("change",function(){
+      let num = document.querySelector("#number").value;
+      document.querySelector("#totalPrice").textContent = (59900 * num).toLocaleString()+" 원";
+    });
+    
+    function addressPopup(){
+      openWin = window.open("address_popup.html", "childForm", "width=500, height=300");
+    }
+
+    // 팝업에서 보내는 메시지를 수신
+    window.addEventListener("message", (event) => {
+      if (event.origin !== "null") return; 
+      document.getElementById("address").value = event.data.address;
+    });
+
+    document.querySelector("#orderForm").addEventListener("submit",function(e){
+      e.preventDefault(); 
+
+      let num = document.querySelector("#number").value;
+      
+      if(num >= 1){
+        location.replace("order_complete.html");
+      }
+      else{
+        alert("수량을 1개 이상 선택해 주세요");
+        return false;
+      }
+    });
+    
+  </script>
+</body>
+</html>

@@ -1,0 +1,507 @@
+1. 상품 주문 페이지 구현
+
+아래는 상품 주문 페이지를 구현하는 과제입니다. 
+제공된 CSS를 활용하여 레이아웃을 구성하고, JavaScript를 사용하여 동적인 기능을 구현하시오.
+------------------------------------------------------------------------------------------------------
+<파일 구조>
+ - order.html : 상품 주문 화면
+ - address_popup.html : 주소 검색 팝업
+ - order_complete.html : 주문 완료 화면
+------------------------------------------------------------------------------------------------------
+<구현되어야 할 기능>
+1-1.상품 주문 화면(order.html)
+상품명과 가격은 변경되지 않음. (기본값 적용 ->무선 이어폰/59900)
+수량 입력 가능 (기본값: 1개)
+수량 변경 시 총 금액 자동 계산(
+주소 입력칸 + "주소검색" 버튼 → 팝업창을 통해 주소 입력 가능
+결제 수단 선택 (신용카드, 계좌이체, 간편결제 중 1개만 선택)
+이메일 입력 필드 (형식 검증 필요)
+배송 요청사항 입력 가능(선택 사항)
+약관 동의 체크박스 (동의 필수)
+주문하기 버튼 클릭 시 입력값 검증 후 주문 완료 페이지로 이동
+
+1-2.주소 검색 팝업(address_popup.html)
+주소 입력 필드와 확인 버튼
+확인 버튼 클릭 시 입력한 주소를 부모창(order.html)으로 전달하고 팝업 닫기
+새로고침 시에, 팝업이 여러번 호출되지 않도록 구현
+
+1-3.주문 완료 화면(order_complete.html)으로 페이지 이동
+"주문이 완료되었습니다!" 메시지 출력
+------------------------------------------------------------------------------------------------------
+<구현 조건 및 요구사항>
+
+- 수량 검증 : 1개 이상이어야 하며, 0 이하일 경우 주문 불가
+- 주소 입력 : 팝업창을 통해 입력된 주소가 자동으로 반영(부모창의 주소입력 텍스트는 readonly적용)
+- 결제 수단 : 3가지 중 하나는 반드시 선택
+- 이메일 유효성 검증 : @와 .이 포함된 올바른 이메일 형식이어야 함(정규표현식 사용하지 않음)
+- 약관 동의 필수 : 체크하지 않으면 주문 불가
+- 총 금액 실시간 반영 : 수량 변경 시 가격 × 수량 자동 계산 (원화표현시, toLocaleString() 사용)
+                             (수량 변경 시 input 이벤트 사용 -> 값이 바뀔 때마다 즉시 실행) 
+- 팝업 창 기능 : 부모창과 데이터 연동 (window.opener 사용)
+- 페이지 이동 방식 : 주문 완료 시 order_complete.html로 이동
+------------------------------------------------------------------------------------------------------
+<order.html의 css>
+<style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 450px;
+      margin: 0 auto;
+    }
+
+    td {
+      padding: 8px;
+      vertical-align: middle;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    input[type="email"],
+    textarea {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 5px;
+    }
+
+    .btn {
+      padding: 6px 12px;
+      margin-left: 5px;
+      cursor: pointer;
+    }
+
+    .buttons {
+      text-align: center;
+    }
+
+    .disabled {
+      background-color: #ccc !important;
+      color: #888 !important;
+      cursor: not-allowed !important;
+      pointer-events: none;
+    }
+
+    #orderBtn {
+      background-color: #2196F3;
+      color: white;
+      border: none;
+    }
+
+    .input-group {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .input-group input {
+      flex: 1;
+    }
+
+    .price-info {
+      text-align: right;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+  </style>
+------------------------------------------------------------------------------------------------------
+<address_popup.html의 css>
+<style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      box-sizing: border-box;
+    }
+
+    button {
+      padding: 8px 16px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+------------------------------------------------------------------------------------------------------
+<order_complete.html의 css>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 40px;
+      text-align: center;
+    }
+
+    h2 {
+      color: #2196F3;
+    }
+
+    p {
+      font-size: 18px;
+      margin-top: 20px;
+    }
+
+    a {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 10px 20px;
+      background-color: #2196F3;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+
+    a:hover {
+      background-color: #1976D2;
+    }
+  </style>
+------------------------------------------------------------------------------------------------------
+답안
+order.html
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>주문 화면</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 450px;
+      margin: 0 auto;
+    }
+
+    td {
+      padding: 8px;
+      vertical-align: middle;
+      border: 1px solid black
+    }
+
+    input[type="text"],
+    input[type="number"],
+    input[type="email"],
+    textarea {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 5px;
+    }
+
+    .btn {
+      padding: 6px 12px;
+      margin-left: 5px;
+      cursor: pointer;
+    }
+
+    .buttons {
+      text-align: center;
+    }
+
+    .disabled {
+      background-color: #ccc !important;
+      color: #888 !important;
+      cursor: not-allowed !important;
+      pointer-events: none;
+    }
+
+    #orderBtn {
+      background-color: #2196F3;
+      color: white;
+      border: none;
+    }
+
+    .input-group {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .input-group input {
+      flex: 1;
+    }
+
+    .price-info {
+      text-align: right;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+  </style>
+</head>
+<body>
+  <form id="orderForm">
+    <table>
+      <h2>상품 주문</h2>
+      <tr>
+        <td>상품명</td>
+        <td>
+          <input id="itemName" type="text" value="무선 이어폰" readonly>
+        </td>
+      </tr>
+      <tr>
+        <td>가격</td>
+        <td>59900 원</td>
+      </tr>
+      <tr>
+        <td>수량</td>
+        <td>
+          <input id="number" type="number" value="1" required>
+        </td>
+      </tr>
+      <tr>
+        <td>총 금액</td>
+        <td><div id="totalPrice"></div></td>
+      </tr>
+      <tr>
+        <td>배송 주소</td>
+        <td>
+          <input id="address" type="text" style="width: 71%;" readonly>
+          <input type="button" class="btn" value="주소검색" onclick="addressPopup()" >
+        </td>
+      </tr>
+      <tr>
+        <td>결제 수단</td>
+        <td>
+          <label><input type="radio" name="buyMethod" value="1" required> 신용카드</label><br>
+          <label><input type="radio" name="buyMethod" value="2"> 계좌이체</label><br>
+          <label><input type="radio" name="buyMethod" value="3"> 간편결제</label>
+        </td>
+      </tr>
+      <tr>
+        <td>이메일</td>
+        <td>
+          <input id="email" type="email" required>
+        </td>
+      </tr>
+      <tr>
+        <td>배송 요청사항</td>
+        <td>
+          <textarea id="request" placeholder="요청사항을 입력하세요 (선택)"></textarea>
+        </td>
+      </tr>
+      <tr>
+        <td>약관 동의</td>
+        <td>
+          <input type="checkbox" name="permission" value="yes" required> 구매 약관에 동의합니다.
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2" class="buttons">
+          <input type="submit" class="btn" id="orderBtn" value="주문하기">
+          <input type="reset" class="btn">
+        </td>
+      </tr>
+    </table>
+  </form>
+  <script>
+    document.querySelector("#totalPrice").textContent = (59900).toLocaleString() +" 원";
+
+    document.addEventListener("change",function(){
+      let num = document.querySelector("#number").value;
+      document.querySelector("#totalPrice").textContent = (59900 * num).toLocaleString()+" 원";
+    });
+    
+    function addressPopup(){
+      openWin = window.open("address_popup.html", "childForm", "width=500, height=300");
+    }
+
+    // 팝업에서 보내는 메시지를 수신
+    window.addEventListener("message", (event) => {
+      if (event.origin !== "null") return; 
+      document.getElementById("address").value = event.data.address;
+    });
+
+    document.querySelector("#orderForm").addEventListener("submit",function(e){
+      e.preventDefault(); 
+
+      let num = document.querySelector("#number").value;
+      
+      if(num >= 1){
+        location.replace("order_complete.html");
+      }
+      else{
+        alert("수량을 1개 이상 선택해 주세요");
+        return false;
+      }
+    });
+    
+  </script>
+</body>
+</html>
+
+
+address_popup.html
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>주소 검색</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      box-sizing: border-box;
+    }
+
+    button {
+      padding: 8px 16px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <h2>주소 검색</h2>
+  <input type="text" id="address" placeholder="주소를 입력하세요">
+  <button onclick="Input()">확인</button>
+  <script>
+    function Input(){
+      const address = document.getElementById("address").value;
+      window.opener.postMessage({ address: address }, "*");
+      window.close(); 
+    }
+  </script>
+</body>
+</html>
+
+
+order_complete.html
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>주문 완료</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 40px;
+      text-align: center;
+    }
+
+    h2 {
+      color: #2196F3;
+    }
+
+    p {
+      font-size: 18px;
+      margin-top: 20px;
+    }
+
+    a {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 10px 20px;
+      background-color: #2196F3;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+
+    a:hover {
+      background-color: #1976D2;
+    }
+  </style>
+</head>
+<body>
+  <h2>주문이 완료되었습니다!</h2>
+  <p>주문해주셔서 감사합니다.</br>상품은 빠르게 배송될 예정입니다.</p>
+  <a>다시 주문하기</a>
+</body>
+</html>
+
+
+2. 다음 JavaScript 코드의 결과로 맞는 것은? -- B
+ let x = 5;
+ let y = "5";
+ console.log(x == y);
+ console.log(x === y);
+ 
+ A) true, true
+ B) true, false
+ C) false, true
+ D) false, false
+
+3. 다음 중 HTML5에서 추가된 시맨틱 태그가 아닌 것은? -- A
+ A) <header>
+ B) <article>
+ C) <section>
+ D) <center>
+
+4. HTML에서 <label for="email">의 역할은? -- A
+A) 이메일 유효성 검사를 수행한다.
+B) 특정 입력 필드와 연결하여 클릭 시 해당 필드를 포커스한다.
+C) 이메일 입력값을 서버로 전송한다.
+D) 폼 제출 버튼을 활성화한다.
+
+5. HTML의 <table>에서 border-collapse: collapse; 속성의 효과는? -- C
+
+A) 테이블 테두리를 제거한다.
+B) 테두리를 두껍게 만든다.
+C) 테두리를 합쳐서 하나로 표시한다.
+D) 테이블 크기를 자동으로 맞춘다.
+
+6. <input type="checkbox">와 <input type="radio">의 차이는? -- A
+
+A) 체크박스는 여러 개 선택 가능, 라디오는 하나만 선택 가능
+B) 둘 다 하나만 선택 가능
+C) 둘 다 여러 개 선택 가능
+D) 차이가 없다.
+
+7. 다음 중 JavaScript에서 변수를 선언하는 키워드가 아닌 것은? - D
+
+A) let
+B) const
+C) var
+D) define
+
+8. document.querySelector("#id")와 같은 기능을 하는 메서드는? -- C
+
+A) getElementsByClassName()
+B) getElementsByTagName()
+C) getElementById()
+D) querySelectorAll()
+
+9. 아래 코드 실행 후 totalPrice에 들어가는 값은? -- D
+let price = 1000;
+let quantity = "3";
+let total = price * quantity;
+
+A) 1000
+B) NaN
+C) "3000"
+D) 3000
+
+10. HTML 문서에서 문자 인코딩을 UTF-8로 설정하기 위한 태그를 작성하세요. --
+<meta charset="UTF-8">

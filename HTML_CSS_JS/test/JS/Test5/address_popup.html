@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>주소 검색</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      box-sizing: border-box;
+    }
+
+    button {
+      padding: 8px 16px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <h2>주소 검색</h2>
+  <input type="text" id="address" placeholder="주소를 입력하세요">
+  <button onclick="Input()">확인</button>
+  <script>
+    function Input(){
+      const address = document.getElementById("address").value;
+      window.opener.postMessage({ address: address }, "*");
+      window.close(); 
+    }
+  </script>
+</body>
+</html>
