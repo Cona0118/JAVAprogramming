@@ -19,7 +19,7 @@
       margin: 0 auto;
     }
 
-    td {
+    td {  
       padding: 8px;
       vertical-align: middle;
       border: 1px solid black
@@ -86,17 +86,17 @@
       </tr>
       <tr>
         <td>가격</td>
-        <td>59900 원</td>
+        <td><span id="price">59900</span> 원</td>
       </tr>
       <tr>
         <td>수량</td>
         <td>
-          <input id="number" type="number" value="1" required>
+          <input id="number" type="number" value="1" min="0" max="10" required>
         </td>
       </tr>
       <tr>
         <td>총 금액</td>
-        <td><div id="totalPrice"></div></td>
+        <td><span id="totalPrice"></span> 원</td>
       </tr>
       <tr>
         <td>배송 주소</td>
@@ -108,9 +108,9 @@
       <tr>
         <td>결제 수단</td>
         <td>
-          <label><input type="radio" name="buyMethod" value="1" required> 신용카드</label><br>
-          <label><input type="radio" name="buyMethod" value="2"> 계좌이체</label><br>
-          <label><input type="radio" name="buyMethod" value="3"> 간편결제</label>
+          <label><input type="radio" name="buyMethod" id="card" value="1" required> 신용카드</label><br>
+          <label><input type="radio" name="buyMethod" id="bank" value="2"> 계좌이체</label><br>
+          <label><input type="radio" name="buyMethod" id="easy" value="3"> 간편결제</label>
         </td>
       </tr>
       <tr>
@@ -128,7 +128,7 @@
       <tr>
         <td>약관 동의</td>
         <td>
-          <input type="checkbox" name="permission" value="yes" required> 구매 약관에 동의합니다.
+          <input type="checkbox" id="permission" value="yes" required> 구매 약관에 동의합니다.
         </td>
       </tr>
       <tr>
@@ -140,11 +140,12 @@
     </table>
   </form>
   <script>
-    document.querySelector("#totalPrice").textContent = (59900).toLocaleString() +" 원";
+    let price = document.querySelector("#price").textContent;
+    document.querySelector("#totalPrice").textContent = price;
 
     document.addEventListener("change",function(){
       let num = document.querySelector("#number").value;
-      document.querySelector("#totalPrice").textContent = (59900 * num).toLocaleString()+" 원";
+      document.querySelector("#totalPrice").textContent = (price * num).toLocaleString();
     });
     
     function addressPopup(){
