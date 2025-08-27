@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>회원가입</title>
+  <style>
+    form {
+      margin-bottom:30px;
+    }
+    input[type="text"], [type="password"],[type="email"] {
+      width:250px;
+      height:25px;
+      text-align: center;
+    }
+    input#id{
+      width: 150px;
+    }
+    input#address{
+      width: 150px;
+    }
+    button {
+      width: 85px;
+      height:35px;
+      margin-left:10px;
+    }
+    table {
+      width:400px;
+      margin-right: auto;
+      margin-left: auto;
+    }
+    table, td {
+      border:1px solid #ccc;
+      border-collapse: collapse;
+    }
+    td {
+      padding:10px;
+    }
+    :disabled{
+      background-color: #ccc;
+    }
+  </style>
+</head>
+<body>
+    <h1 style="text-align: center;">회원가입</h1>
+    <div class="form-container">
+        <form>
+            <table>
+              <tr>
+                <td>
+                  <label for="id">아이디</label>
+                </td>
+                <td>
+                  <input type="text" id="id" name="id" required>
+                  <button onclick="idConfirm()">중복확인</button>
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <label for="password">비밀번호</label>
+                </td>
+                <td>
+                  <input type="password" id="password" name="password" required>
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <label for="password_confirm">비밀번호 확인</label>
+                </td>
+                <td>
+                  <input type="password" id="password_confirm" name="password_confirm" required>
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <label for="name">이름</label>
+                </td>
+                <td>
+                  <input type="text" id="name" name="name" required>
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <label for="email">이메일</label>
+                </td>
+                <td>
+                  <input type="email" id="email" name="email">
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <label for="address">주소</label>
+                </td>
+                <td>
+                  <input type="text" id="address" name="address" value=" ">
+                  <button type="button" onclick="addressInput()">주소검색</button>
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <label for="terms_service">약관동의</label>
+                </td>
+                <td>
+                  <input type="checkbox" id="terms_service" name="terms_service">
+                  <label for="terms_service">서비스 이용약관 동의(선택)</label> <br>
+                  <input type="radio" id="privacy_agree" name="privacy" >
+                  <label for="privacy_agree">개인정보 처리방침 동의(필수)</label> <br>
+                  <input type="radio" id="privacy_disagree" name="privacy" checked>
+                  <label for="privacy_disagree">개인정보 처리방침 비동의</label>
+                </td>
+              </tr>
+
+              <tr>
+                <td colspan="2">
+                  <button type="button" id="regist" style="margin-left: 120px;" onclick="register()" disabled>회원가입</button>
+                  <button type="reset" style="width: 50px">취소</button>
+                </td>
+              </tr>
+            </table>
+        </form>
+    </div>
+
+    <script>
+      var idCon = false;
+      function idConfirm(){
+        let id = document.querySelector("#id");
+        if(id.value !== ""){
+          if(window.confirm("중복확인 되었습니다.")){
+            idCon = true; 
+          }
+        }
+      }
+
+      function register(){
+        let password = document.querySelector("#password");
+        let password_confirm = document.querySelector("#password_confirm");
+        let id = document.querySelector("#id");
+        let name = document.querySelector("#name");
+
+        if(idCon){
+          if(password.value === password_confirm.value){
+            if(password.value !== "" && id.value !== "" && name.value !== ""){              
+              location.replace("main.html");
+            }
+            else{
+              return false;
+            }
+          }
+          else{
+            alert("비밀번호가 일치하지 않습니다.");
+            return false;
+          }
+        }
+        else{
+          alert("ID 중복확인을 실시해주세요.");
+          return false;
+        }
+      }
+
+      function addressInput(){
+        openWin = window.open("addressInput.html", "childForm", "width=500, height=300");
+      }
+      // 팝업에서 보내는 메시지를 수신
+      window.addEventListener("message", (event) => {
+        if (event.origin !== "null") return; 
+        document.getElementById("address").value = event.data.address;
+      });
+
+
+      document.addEventListener("DOMContentLoaded",function(){
+        const privacy_agree = document.querySelector("#privacy_agree");
+        const privacy_disagree = document.querySelector("#privacy_disagree");
+        const submitBtn = document.querySelector("#regist");
+        privacy_agree.addEventListener("change",function(){
+          if(this.checked){
+            submitBtn.disabled = false;
+          }
+        });
+        privacy_disagree.addEventListener("change",function(){
+          if(this.checked){
+            submitBtn.disabled = true;
+          }
+        });
+      });
+    </script>
+</body>
+</html>
