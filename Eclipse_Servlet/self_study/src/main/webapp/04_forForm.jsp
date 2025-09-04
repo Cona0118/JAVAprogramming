@@ -8,7 +8,7 @@
 </head>
 <body>
 <h1>For 문 예제</h1>
-<form method="post" action="4_for.jsp" >
+<form method="post" action="04_for.jsp" >
 1부터 더할 end 값: 
 <input type="text" name="end"> <br>
 <input type="submit" value="확인">
@@ -16,3 +16,4 @@
 </body>
 
 </html>
+
