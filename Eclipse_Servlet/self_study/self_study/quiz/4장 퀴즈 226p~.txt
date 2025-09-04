@@ -1,0 +1,209 @@
+[퀴즈로 정리합시다] 226p~
+1. 액션 태그의 종류와 그 기능을 설명하시오.
+ - forward, include, session, exception
+ -> 212p
+
+2. JSP 내장 객체 9개를 기술하고 간단한 설명을 덧붙이시오.
+ -> 181p
+
+3. 4개의 내장 객체에 대해서 다음 표를 채우시오.
+
+내장 객체			패키지		 		클래스       
+───────────────────────────────────────────────────────
+requset		javax.servlet.http		HttpServletRequest
+
+───────────────────────────────────────────────────────
+response	javax.servlet.http		HttpServletResponse
+
+───────────────────────────────────────────────────────
+application	 javax.servlet			 ServletContext
+
+───────────────────────────────────────────────────────
+out			 javax.servlet.jsp		JspWriter
+
+───────────────────────────────────────────────────────
+
+4. <jsp:forward>와 동일한 기능을 수행하는 forward() 메소드를 가진 JSP 내장 개체는무엇인가? ①
+① request  ② response  ③ application  ④ out
+
+
+5. request 객체에 대한 설명으로 틀린 것은? ②
+① HttpServletRequest가 원본이다.
+② 클라이언트의 응답 정보를 저장한다.
+③ Servlet의 do Post 메소드에도 이 객체를 처리할 수 있는 파라미터가 있다.
+④ 폼에서 전송하는 파라미터를 처리할 때는 getParameter()를 사용한다.
+
+
+6. 다음에 제시된 것은 JSP에서 사용 가능한 내장 객체 변수명과 그 변수들이 참조하는 객체의 유형이다. 틀린 것은?
+① request- HttpServletRequest
+② config - ServletConfig
+③ session - HttpSession
+④ page - PageContext
+ -> ④ page는 java.lang.Object 형을 참조하는 내장 객체 변수이다 
+
+7. 다음은 좀 데이터의 전달 방식인 get과 post 방식에 대한 설명이다. 
+	올바른 설명에는 O를 기입하고 틀린 설명에는 X를 기입하시오.
+① 패스워드를 사용자에게 받아서 웹 서버로 보내기 위해서는 post 방식보다 get방식이 좋다.	( X )
+② get 방식은 브라우저에서 웹 서버로 전송할 수 있는 파라미터의 길이에 제한이있다.		( X ) -> ( O )
+③ post 방식은 전송해야 할 파라미터를 URL에 붙여서 웹 서버로 전송한다.					( X )
+④ get 방식과 post 방식 중에 get 방식이 처리 속도면에서 더 빠르다.						( O )
+⑤ post 방식은 HTTP 헤더 뒤에 입력스트림 데이터로 전달된다.								( O )
+⑥ 폼 데이터를 전달받는 jsp에서 request setCharacterEncoding("UTF-8")라는 코드를 활용하는 이유는 
+	get 방식으로 전달되는 데이터 중 한글을 올바로 처리하기 위함이다.					( O ) -> ( X )
+	 // -> post 방식으로 ~
+	
+8. 다음에 제시된 JSP의 액션 태그 중에서 요청을 다른 자원으로 완전히 넘기고자 할 때 사용되는 태그는? ②
+① <jsp:getProperty> 
+② <jsp:forward> 
+③ <jsp:include>
+④ <jsp:param>
+	
+
+9. JSP에는 속성(attribute)을 정의할 수 있는 네 개의 객체가 존재하는데 각각 request, response, 
+	session, application과 같은 역할을 하는 서블릿 객체들의 각각의 이름을 기술하시오.
+-> request 		:   HttpRequest
+   request 		: 	HttpResponse
+   session		:	HttpSession
+   application	:	ServletContext
+	
+	
+10. 다음 중 forward 메소드에 대한 설명으로 옳지 않은것은? ③
+① 요청을 서버 내의 자원으로 전달해 JSP 페이지를 직접 호출하기 때문에 응답 시간이 빠르다.
+② 데이터 전송을 위해 get/setAttribute에 객체(값)을 넣어 전달한다.
+③ request 속성으로 저장된 객체를 유지할 수 없다.
+④ 서블릿 컨테이너에서 처리되기 때문에 URL 변화가 없다.
+
+
+11. include 지시자와 include 액션에 대한 설명으로울지 않은 것은? ② -> ③
+① include 액션은 실행 시점에서 파일을 개별적으로 컴파일한다.
+② include 액션은 파일 두개가 합쳐졌을 때, 완전한 JSP 파일이 아니어도 상관 없다.
+③ include 지시자는 <%@include page ="sub.jsp" %>로 표기한다. // <%@include file ="sub.jsp" %>
+④ include 액션은 <jsp:include page ="sub.jsp"/>로 표기한다.
+
+
+12. 다음 중 forward 액션에 대한 설명이 잘못된 것은? ② -> ④
+① include 액션과 유사하지만 현재 페이지의 제어권을 완전히 다른 페이지로 전달한다.
+② 주소창의 주소가 이전의 주소로 남아 있다.
+③ request의 객체를 전달할 수 있다.
+④ <jsp:forward file="포워딩할파일명" />으로 쓴다. // <jsp:forward page="포워딩할파일명" />
+
+
+13. 다음 두 개의 코드는 <input> 폼 파라미터와 관련된 홈페이지와 이 홈페이지에서
+	제공되는 [전송] 버튼을 클릭했을 경우 사용자가 선택한 내용을 출력하는 jsp 파일
+	의 내용입니다. jsp 파일의 ①~③에 알맞은 소스 코드를 제시하시오.
+
+┌───────────────────────────────────────────────────────────────────────┐
+│ infoForm.jsp															│
+│ <html>																│
+│ <head>																│
+│ <meta http-equiv="Content-Type" content="text/html;charset-utf-8">	│
+│ </head>																│
+│ <body>																│
+│ 	가입할 ID와 Password 및 자기소개를 입력하세요.						│
+│ 	<form action-"infoResult.jsp" method="post">						│
+│ 		ID: <input type="text" name="id"><br/>							│
+│ 		Password: <input type="password" name="pw"><br/>				│
+│ 		자기소개<br/>													│
+│ 		<textarea name= "desc" cols="50" rows="4"></textarea><br>		│
+│ 		<input type="submit" value="전송">								│
+│ 		<input type="reset" value="초기화">								│
+│ 	</form>																│
+│ </body>																│
+│ </html>																│
+└───────────────────────────────────────────────────────────────────────┘
+
+┌───────────────────────────────────────────────────────────────────┐
+│ infoResult.jsp													│
+│ < page contentType="text/html; charset-utf-8" %>					│																│
+│ <%																│		
+│	request.setCharacterEncoding("utf-8");							│
+│ %>																│
+│ <html>															│
+│ <head><title>Textform</title></head>								│
+│ <body>															│
+│	당신이 입력한 정보입니다.<br/>									│
+│	<b>ID</b>: <%= ① id						%><br/>				│
+│	<b>Password</b> : <%= ② pw							%><br/>		│
+│	<b>자기소개</b><br/>											│
+│ 	<%= ③ desc						%><br/>					 		│
+│ </body>															│
+│ </html>														 	│
+└───────────────────────────────────────────────────────────────────┘
+-> 	① request.getParameter("id"),
+  	② request.getParameter("pw"),
+  	③ request.getParameter("desc")
+
+
+14. 다음 두 개의 코드는 <select> 폼 파라미터와 관련된 홈페이지와 이 홈페이지에서
+제공되는 [전송] 버튼을 클릭했을 경우 사용자가 선택한 내용을 출력하는 jsp 파일
+의 내용입니다. jsp 파일의 ①~③에 알맞은 소스 코드를 제시하시오.
+
+┌───────────────────────────────────────────────────────────────────────────┐
+│ selectForm.jsp															│	
+│ <html>																	│
+│ <body>																	│
+│ <form action="selectResult.jsp" method="post">							│
+│ <table border=1>															│
+│ <tr>																		│
+│ <td>학력</td>																│
+│ <td>																		│
+│ <select name="edu">														│
+│ 	<option selected>재학생 </option>										│
+│ 	<option>학사</option>, <option>석사</option>, <option> 박사/option>		│
+│ </select>																	│
+│ </td>																		│
+│ </tr>																		│
+│ <tr>																		│
+│ <td>소속국가</td>															│
+│ <td>																		│
+│ <select name="na" size="3">												│
+│ 	<option selected>Korea</option>, <option>USA</option>,					│
+│ 	<option>Japan</option>													│
+│ </select>																	│
+│ </td>																		│
+│ </tr>																		│
+│ <tr>																		│
+│ <td>관심분야</td>															│
+│ <td><select name="like" size="4" multiple>								│
+│ 	<option >광고/ 미디어</option>, <option selected>프로듀서 </option>		│
+│ 	<option selected>컨설팅</option>, <option >그래픽디자이너</option>		│
+│ </select>																	│
+│ </td>																		│
+│ </tr>																		│
+│ </table>																	│
+│ <Input type="submit" value="전송" >										│
+│ <Input type="reset" value="초기화 >										│
+│ </form>																	│
+│ </body>																	│
+│ </html>																	│
+└───────────────────────────────────────────────────────────────────────────┘
+
+┌───────────────────────────────────────────────────────────────────────────────────────┐
+│ selectResult.jsp																		│
+│ <%@ page contentType="text/html; charset-euc-kr" %><%request.							│	
+│ setCharacterEncoding("UTF-8"); %><html>												│
+│ <body> 당신의 학력, 소속국가 및 관심분야는 다음과 같습니다. <br><br> 					│
+│ <% String edu = ① 				String na = ②										│
+│	String [] likes = ③				%><b> <%= edu%> </b> 과	 <b> <%=na%> </b> 		│
+│ <br><br><% for ( int i = 0; i < ④     ; i++){%> <b>⑤		</b><br> <%} %></body>	│
+│ </html>																				│
+└───────────────────────────────────────────────────────────────────────────────────────┘
+① getparameter("edu") 		 -> request.getParameter("edu");
+② getparameter("na")		 -> request.getParameter("na");
+③ getparameterValue("like") -> request.getParameterValues("like");
+④ likes.length
+⑤ likes[i]					 -> <%=likes[i]%>
+
+
+15. response 기본 객체가 지닌 메소드 중 현재 페이지에 대한 요청을 다른 페이지의 
+	요청으로 전환해 주는 기능을 지닌 메소드는?
+ - extends  
+ -> sendRedirect()
+
+
+16. JSP 내장 객체 중에서 웹 브라우저 화면상에 출력하는 부분과 연관된 객체는 다음 중 무엇인가? ② 
+① application
+② out
+③ session
+④ page
+
