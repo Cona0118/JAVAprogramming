@@ -38,6 +38,4 @@
 <input type="reset" value="취소">
 </form>
 </body>
-
 </html>
-
