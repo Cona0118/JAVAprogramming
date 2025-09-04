@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>128P 회원가입 페이지 작성하기</title>
-<script type="text/javascript" src="registcheck.js"></script>
+<script type="text/javascript" src="2_registcheck.js"></script>
 </head>
 <body>
 <form method="post" action="registServlet" name="info">
@@ -38,4 +38,5 @@
 <input type="reset" value="취소">
 </form>
 </body>
+
 </html>
