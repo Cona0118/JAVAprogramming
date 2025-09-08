@@ -1,0 +1,109 @@
+[퀴즈로 정리합시다] 394p~
+1. 표현 언어가 무엇인지 개념을 정의하고 이를 사용하면 어떤 장점이 있는지도 나열하시오.
+ - 웹페이지에 값을 표시하는데 사용하는 태그
+ 
+ 
+2. JSTL 태그 라이브러리가 무엇인지 개념을 정의하고 JSTL의 핵심이 되는 라이브러리를 나열하고 
+	간단히 설명을 하시오.
+ - HTML 코드와 스크립트릿을 함께 사용할경우 가독성이 떨어지기 때문에 이를 보완하기 위해 등장한 커스텀 태그
+
+
+3. JSTL 태그 라이브러리의 장점을 나열하시오.
+ - 가독성이 올라간다.
+
+
+4.다음과 같이 season이라는 체크박스를 가진 HTML 폼에서 사용자가 하나 이상의
+	항목을 체크할 경우 첫 번째 파라미터 값을 얻어오는 표현 언어를 고르시오. ②
+┌───────────────────────────────────────────────────────────────────────────────┐
+│																				│
+│  	<input type="checkbox" name="season" value="봄"> 봄							│
+│	<input type="checkbox" name="season" value="여름" checked="checked"> 여름	│
+│	<input type="checkbox" name="season" value="가을" checked="checked"> 가을	│
+│	<input type="checkbox" name" season" value="겨울"> 겨울						│
+│ 																				│
+└───────────────────────────────────────────────────────────────────────────────┘ 
+① ${paramValue.season} 
+② ${paramValues.season[0]}
+③ ${param.season}
+④ ${paramValues[season][0]}
+
+
+5. 다음 중 계절을 저장하고 있는 ArrayList에서 겨울을 출력하기 위한 코드로 올바른
+	것을 모두 고르시오 한개 이상). ②,④
+┌───────────────────────────────────────────────────────────────────────────────┐
+│																				│
+│	<%																			│
+│		java.util.List<String> seasonList = new java.util.ArrayList<String>();	│
+│		seasonlist.add("봄");													│
+│		seasonlist.add("여름");													│	
+│		seasonList.add("가을"):													│
+│		seasonlist.add("겨울");													│
+│		request.setAttribute("list", seasonlist);								│								
+│		request.setAttribute("index", 1);										│									
+│	%>																			│			
+│ 																				│
+└───────────────────────────────────────────────────────────────────────────────┘ 
+① ${list.3} 
+② ${list[3]}
+③ ${list.index+2}
+④ ${list[index+2]}
+
+
+6. JSP를 요청하면서 쿼리 스트링을 firstname=sung&lastname=yoonjung과 같이 보낼 경우 
+	어떤 결과가 나올 것인지 유추해 보시오(한 개 이상).
+┌───────────────────────────┐
+│							│
+│	${param.firstname}		│
+│	${param.middlename}		│
+│	${param.lastname)		│
+│							│
+└───────────────────────────┘
+- 	sung
+	yoounjung 
+	
+
+7. JSTL에서 배열과 같은 컬렉션을 반복 수행할 때 사용하는 태그를 고르시오. ③
+① <c:iterate>  ② <c:for>  ③ <c:forEach>  ④ <c:forTokens>
+
+	
+8. 다음은 스크립트릿에서 자바 코드로 콤보박스를 만드는 코드입니다.
+	이를 JSTL 코드로 바꾸어 보시오.
+┌───────────────────────────────────────────────────────────────────────────────────┐
+│																					│
+│	<%																				│
+│	java.util.List<String> seasonList = new java.util.ArrayList<String>();			│
+│	seasonList.add("봄");															│
+│	seasonList.add("여름");															│
+│	seasonList.add("가을");															│
+│	seasonList.add("겨울");															│
+│	request.setAttribute("list", seasonList);										│
+│	%>																				│
+│	<select name="season">															│
+│	<%																				│
+│	java.util.Arraylist list = (java.util.Arraylist)request.getAttribute("list");	│
+│	int i;																			│
+│	for(i=e; i<list.size(); 1++){													│
+│	%>																				│
+│		<option value="<%=list.get(i)%>"> <%=list.get(i)%>							│
+│	<% }																			│
+│	%>																				│
+│	</select>																		│
+│																					│
+└───────────────────────────────────────────────────────────────────────────────────┘ 
+-
+<%																				
+	java.util.List<String> seasonList = new java.util.ArrayList<String>();			
+	seasonList.add("봄");															
+	seasonList.add("여름");															
+	seasonList.add("가을");													
+	seasonList.add("겨울");															
+	request.setAttribute("list", seasonList);										
+%>
+<select name="season">	
+<c:forEach var="season" items="${seasonList}" varStatus="status">
+	<option value="${season}"> ${season}
+</select>
+
+
+
+
