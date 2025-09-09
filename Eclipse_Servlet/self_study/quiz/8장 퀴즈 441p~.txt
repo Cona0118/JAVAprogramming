@@ -1,25 +1,36 @@
 [퀴즈로 정리합시다] 441p~
 1. DBMS란 무엇의 약어인지 기술하고 개념을 설명하시오.
+ -> DBMS는 DataBase Management System의 약어로 오라클이나 MS SQL Server와 같은 데이터베이스 관리 시스템을 말한다.
 
 
 2. JDBC가 무엇의 약어인지 기술하고 개념을 설명하시오.
-- Javascript Data Base Cotroller / 자바스크립트 상에서 데이터베이스를 조작하기 위해 사용
+ - Javascript Data Base Cotroller / 자바스크립트 상에서 데이터베이스를 조작하기 위해 사용
+ -> JDBC는 Java Database Connectivity의 약어로 자바 프로그램에서 데이터베이스에 일관된 방식으로 
+ 	접근할 수 있도록 API를 제공하는 클래스의 집합을 말합니다.
 
 
 3. JDBC 프로그램을 위한 절차를 기술하시오.
+ -> 1) JDBC 드라이버 로드	2) 데이터베이스와 연결   	3) SQL 문 실행   	4) 데이터베이스와 연결을 끊는다
 
 
 4. JDBC 프로그램에서 select 문을 수행할 경우 4가지 절차를 거칩니다.
 	이 단계에서 필요한 인터페이스 혹은 클래스를 기술하시오.
+ -> 1) DriverManager		2) Connection 				3) Statement 		4) ResultSet 
 
 
 5. Connection, Statement, Resultset 인터페이스에 대해서 설명하시오.
+ ->	Connection :데이터베이스와 연결과 관련된 인터페이스
+	Statement :질의, 갱신 실행과 관련된 인터페이스
+	ResultSet 결과물을 가져오는 인터페이스
 
 
 6. JDBC 드라이버가 왜 필요한지 JDBC 프로그램의 역할을 설명하시오.
+ -> Java에서 DB를 사용하기 위해 연결해주는 역할이다.
 
 
 7. Statement 객체와 PreparedStatement 객체의 차이점을 설명하시오.
+ -> PreparedStatement는 Statemenet 객체로 쿼리문을 작성할 경우 복잡해지는 쿼리문을 
+ 보다 간단하게 작성할 수 있도록 하기 위해서 제공되는 객체
 
 
 8. 다음과 같이 파라미터를 가지는 SQL 구문을 만들 때 사용되는 인터페이스는 무엇인가? ④
@@ -42,17 +53,17 @@
 
 10. 다음 글의 빈 곳에 들어갈 알맞은 공통의 단어를 제시하시오.
 ┌───────────────────────────────────────────────────────────────────────────────────────┐
-│	(		 )는 Java를 이용한 데이터베이스 접속과 SQL 문장의 실행, 그리고 그 결과로	│
-│	얻어진 데이터의 핸들링을 제공하는 방법과 절차에 대한 규약이다. 즉, ( 		)는 	│
-│	개발자가 데이터베이스와 연동되는 프로그램을 개발할 때 데이터베이스에 접속하고 적절	│
-│	한 처리를 수행하기 위해 데이터베이스에 SQL 질의를 보내고 그 결과로 얻은 값을 활용	│
-│	하기 위해 필요한 Java 클래스 형태의 표준화된 API를 제공한다.						│
+│	(		 )는 Java를 이용한 데이터베이스 접속과 SQL 문장의 실행, 그리고 그 결과로			│
+│	얻어진 데이터의 핸들링을 제공하는 방법과 절차에 대한 규약이다. 즉, ( 		)는 		│
+│	개발자가 데이터베이스와 연동되는 프로그램을 개발할 때 데이터베이스에 접속하고 적절			│
+│	한 처리를 수행하기 위해 데이터베이스에 SQL 질의를 보내고 그 결과로 얻은 값을 활용			│
+│	하기 위해 필요한 Java 클래스 형태의 표준화된 API를 제공한다.							│
 └───────────────────────────────────────────────────────────────────────────────────────┘
  - ResultSet
-
+ -> JDBC(Java DataBase Connectivity)
 
 11. 다음 코드는 품으로부터 전송되는 데이터를 memberl이라는 테이블에 삽입하는 코드입니다. 
-	빠진 부분을채워서 코드를 완성시켜 보시오.
+	빠진 부분을채워서 코드를 완성시켜 보시오. -> 
 ┌───────────────────────────────────────────────────────────────────────┐	
 │	<%@ page language="java" contentType="text/html; charset=UTF-8"		│
 │		pageEncoding="UTF-8"%>											│
@@ -71,29 +82,29 @@
 │																		│
 │	try{																│
 │	//(1 단계) JDBC 드라이버 로드										│
-│	Class.forName (	①					)
-│	//(2단계) 데이터베이스 연결 객체인 Connection 생성					│
-│	conn = DriverManager.getConnection( ②		, 
-│										③		, ④		);
+│	Class.forName (	① "oracle.jdbc.driver.OracleDriver"  )				│
+│	//(2단계) 데이터베이스 연결 객체인 Connection 생성						│
+│	conn = DriverManager.getConnection( ②	url	, 						│
+│										③	uid	, ④  pwd	);			│
 │																		│
 │	//(3단계) Statement 객체 생성하기									│
-│	⑤
+│	⑤ pstmt = conn.prepareStatement(sql);								│
 │	//(4단계) 바인딩 변수를 채운다.										│
-│	⑥
-│	⑦
-│	⑧
-│	// (5단계) SQL문을 실행하여 결과 처리								│
-│	⑨
+│	⑥ pstmt.setString(1, id);											│
+│	⑦ pstmt.setString(2, passwd);										│
+│	⑧ pstmt.setString(3, name);											│
+│	// (5단계) SQL문을 실행하여 결과 처리									│
+│	⑨ pstmt.executeUpdate(); 											│
 │	)catch(Exception e){												│
 │		e.printStackTrace();											│
 │	}finally{															│
-│	//(6단계) 사용한 리소스 해제										│
-│		⑩
+│	//(6단계) 사용한 리소스 해제											│
+│		⑩ conn.close();													│
 │	%>																	│
 │	<html>																│
 │	<head><title>레코드 삽입 (추가) 예제</title></head>					│
 │	<body>																│
-│		member1 테이블에 새로운 레코드를 삽입(추가)했습니다.			│
+│		member1 테이블에 새로운 레코드를 삽입(추가)했습니다.				│
 │	</body>																│
 │	</html>																│
 └───────────────────────────────────────────────────────────────────────┘
@@ -108,14 +119,15 @@
 ② 웹 서버
 ③ Tomcat 서버
 ④ JDK(Java Development Kit)
+	// Java DataBase 프로그램을 작성할 때 데이터베이스와 연결을 담당하는 것은 JDBC 드라이버
 
 
-14. JDBC를 이용한 웹 프로그램을 하려고 합니다. 관련 API의 사용이 옳은 것은 무엇인가? ④
-① 	Connction conn = DriverManager.connection(url, id, pw):
+14. JDBC를 이용한 웹 프로그램을 하려고 합니다. 관련 API의 사용이 옳은 것은 무엇인가? ④ -> X
+① 	Connction conn = DriverManager.connection(url, id, pw): // .getConnection
 ②	Statement stmt conn.createStatement():
-	ResultSet rs = stmt.executeUpdate(sql):
-③	PreparedStatement pstmt = conn.prepareStatement();
-④	ResultSet rs = stmt.executeQuery():
+	ResultSet rs = stmt.executeUpdate(sql): // executeQuery
+③	PreparedStatement pstmt = conn.prepareStatement(); // prepareStatement(sql)
+④	ResultSet rs = stmt.executeQuery(): // excuteUpdate
 
 
 15. 다음 중 JDBC를 이용한 데이터 처리 순서를 올바르게 나열한 것은? ④
@@ -133,7 +145,7 @@
 
 
 17. SQL 구문 가운데 insert, delete와 update를 실행하려고 한다. 
-	Statement 인터페이스에서 어떤 메소드를사용해야하는가? ③
+	Statement 인터페이스에서 어떤 메소드를사용해야하는가? ③ -> ④
 ① Connection getConnection()
 ② ResultSet getResultSet()
 ③ ResultSet executeQuery(String sql)
