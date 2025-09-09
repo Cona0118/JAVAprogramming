@@ -1,11 +1,14 @@
 [퀴즈로 정리합시다] 394p~
 1. 표현 언어가 무엇인지 개념을 정의하고 이를 사용하면 어떤 장점이 있는지도 나열하시오.
  - 웹페이지에 값을 표시하는데 사용하는 태그
+ -> 표현 언어는 값(데이터)을 웹 페이지에 표시(표현)하는 데 사용되는 태그이다
  
  
 2. JSTL 태그 라이브러리가 무엇인지 개념을 정의하고 JSTL의 핵심이 되는 라이브러리를 나열하고 
 	간단히 설명을 하시오.
  - HTML 코드와 스크립트릿을 함께 사용할경우 가독성이 떨어지기 때문에 이를 보완하기 위해 등장한 커스텀 태그
+ -> JSTL 태그 라이브러리는 JSP는 스크립트릿과 자바 코드 등 여러 코드들이 섞여서 복잡한 구조로 되어있는데, 
+ 	간결하고 이해하기 쉽게 코딩을 하기 위해 추가한 태그를 말한다. 
 
 
 3. JSTL 태그 라이브러리의 장점을 나열하시오.
@@ -58,8 +61,7 @@
 │	${param.lastname)		│
 │							│
 └───────────────────────────┘
-- 	sung
-	yoounjung 
+- 	sung yoounjung 
 	
 
 7. JSTL에서 배열과 같은 컬렉션을 반복 수행할 때 사용하는 태그를 고르시오. ③
@@ -91,14 +93,6 @@
 │																					│
 └───────────────────────────────────────────────────────────────────────────────────┘ 
 -
-<%																				
-	java.util.List<String> seasonList = new java.util.ArrayList<String>();			
-	seasonList.add("봄");															
-	seasonList.add("여름");															
-	seasonList.add("가을");													
-	seasonList.add("겨울");															
-	request.setAttribute("list", seasonList);										
-%>
 <select name="season">	
 <c:forEach var="season" items="${seasonList}" varStatus="status">
 	<option value="${season}"> ${season}

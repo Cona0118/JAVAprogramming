@@ -1,0 +1,151 @@
+[퀴즈로 정리합시다] 441p~
+1. DBMS란 무엇의 약어인지 기술하고 개념을 설명하시오.
+
+
+2. JDBC가 무엇의 약어인지 기술하고 개념을 설명하시오.
+- Javascript Data Base Cotroller / 자바스크립트 상에서 데이터베이스를 조작하기 위해 사용
+
+
+3. JDBC 프로그램을 위한 절차를 기술하시오.
+
+
+4. JDBC 프로그램에서 select 문을 수행할 경우 4가지 절차를 거칩니다.
+	이 단계에서 필요한 인터페이스 혹은 클래스를 기술하시오.
+
+
+5. Connection, Statement, Resultset 인터페이스에 대해서 설명하시오.
+
+
+6. JDBC 드라이버가 왜 필요한지 JDBC 프로그램의 역할을 설명하시오.
+
+
+7. Statement 객체와 PreparedStatement 객체의 차이점을 설명하시오.
+
+
+8. 다음과 같이 파라미터를 가지는 SQL 구문을 만들 때 사용되는 인터페이스는 무엇인가? ④
+┌───────────────────────────────────────────────────────────────────┐
+│	String query = "insert into member values (?, ?, ?, ?, ?)";		│	
+└───────────────────────────────────────────────────────────────────┘
+① ResultSetMetaData 
+② ResultSet
+③ Statement 
+④ PreparedStatement
+
+
+9. Statement PreparedStatement 인터페이스의 executeQuery() 메소드로 SQL 구문을 실행시킬 때 
+	리턴되는 것은 무엇인가? ②
+① Connection 객체
+② ResultSet 객체
+③ Statement 객체
+④ PreparedStatement 객체
+
+
+10. 다음 글의 빈 곳에 들어갈 알맞은 공통의 단어를 제시하시오.
+┌───────────────────────────────────────────────────────────────────────────────────────┐
+│	(		 )는 Java를 이용한 데이터베이스 접속과 SQL 문장의 실행, 그리고 그 결과로	│
+│	얻어진 데이터의 핸들링을 제공하는 방법과 절차에 대한 규약이다. 즉, ( 		)는 	│
+│	개발자가 데이터베이스와 연동되는 프로그램을 개발할 때 데이터베이스에 접속하고 적절	│
+│	한 처리를 수행하기 위해 데이터베이스에 SQL 질의를 보내고 그 결과로 얻은 값을 활용	│
+│	하기 위해 필요한 Java 클래스 형태의 표준화된 API를 제공한다.						│
+└───────────────────────────────────────────────────────────────────────────────────────┘
+ - ResultSet
+
+
+11. 다음 코드는 품으로부터 전송되는 데이터를 memberl이라는 테이블에 삽입하는 코드입니다. 
+	빠진 부분을채워서 코드를 완성시켜 보시오.
+┌───────────────────────────────────────────────────────────────────────┐	
+│	<%@ page language="java" contentType="text/html; charset=UTF-8"		│
+│		pageEncoding="UTF-8"%>											│
+│	<%@ page import="java.sql.*"%>										│
+│																		│
+│	<%																	│
+│	request.setCharacterEncoding("UTF-8");								│
+│																		│
+│	String id = request.getParameter("id");								│
+│	String passwd = request.getParameter("passwd");						│
+│	String name= request.getParameter("name");							│
+│																		│
+│	Connection conn = null;					   							│
+│	PreparedStatement pstmt = null;										│
+│	String sql = "insert into member1 values (?,?,?)";					│
+│																		│
+│	try{																│
+│	//(1 단계) JDBC 드라이버 로드										│
+│	Class.forName (	①					)
+│	//(2단계) 데이터베이스 연결 객체인 Connection 생성					│
+│	conn = DriverManager.getConnection( ②		, 
+│										③		, ④		);
+│																		│
+│	//(3단계) Statement 객체 생성하기									│
+│	⑤
+│	//(4단계) 바인딩 변수를 채운다.										│
+│	⑥
+│	⑦
+│	⑧
+│	// (5단계) SQL문을 실행하여 결과 처리								│
+│	⑨
+│	)catch(Exception e){												│
+│		e.printStackTrace();											│
+│	}finally{															│
+│	//(6단계) 사용한 리소스 해제										│
+│		⑩
+│	%>																	│
+│	<html>																│
+│	<head><title>레코드 삽입 (추가) 예제</title></head>					│
+│	<body>																│
+│		member1 테이블에 새로운 레코드를 삽입(추가)했습니다.			│
+│	</body>																│
+│	</html>																│
+└───────────────────────────────────────────────────────────────────────┘
+
+
+12.JDBC의 확장 API에 포함된 DataSource를 사용하고자 할 때 필요한 Package는? ②
+① java.sql ② javax.sql ③ java.awt ④ java.jo
+
+
+13. 다음 중 Java를 이용하여 DataBase 프로그램을 개발할 때 Database와 프로그램을 연결시켜주는 것은? ①
+① JDBC(Java Database Connectivity) 드라이버
+② 웹 서버
+③ Tomcat 서버
+④ JDK(Java Development Kit)
+
+
+14. JDBC를 이용한 웹 프로그램을 하려고 합니다. 관련 API의 사용이 옳은 것은 무엇인가? ④
+① 	Connction conn = DriverManager.connection(url, id, pw):
+②	Statement stmt conn.createStatement():
+	ResultSet rs = stmt.executeUpdate(sql):
+③	PreparedStatement pstmt = conn.prepareStatement();
+④	ResultSet rs = stmt.executeQuery():
+
+
+15. 다음 중 JDBC를 이용한 데이터 처리 순서를 올바르게 나열한 것은? ④
+① SQL 문장을 처리 - Driver 로딩 - 데이터베이스와 연결 - 사용한 리소스 해제
+② 데이터베이스와 연결 - SQL 문장을 처리 - Driver 로딩 - 사용한 리소스 해제
+③ Driver 로딩 - SQL 문장을 처리 - 데이터베이스와 연결 - 사용한 리소스 해제
+④ Driver 로딩 - 데이터베이스와 연결 - SQL 문장을 처리 - 사용한 리소스 해제
+
+
+16. JSP 페이지에서 DBMS와 연동하여 SQL 질의를 실행하는 프로그램을 작성하려고 한다. 올바른 절차는? ②
+① DBMS와 연결, SQL 질의 실행, Statement 객체 생성, Resultset 객체 처리, 연결 종료
+② DBMS와 연결, Statement 객체 생성, SQL 질의 실행, Resultset 객체 처리, 연결 종료
+③ DBMS와 연결, ResultSet 객체 처리, Statement 객체 생성, SQL 질의 실행, 연결 종료
+④ DBMS와 연결, Statement 객체 생성, ResultSet 객체 처리, SQL 질의 실행, 연결 종료
+
+
+17. SQL 구문 가운데 insert, delete와 update를 실행하려고 한다. 
+	Statement 인터페이스에서 어떤 메소드를사용해야하는가? ③
+① Connection getConnection()
+② ResultSet getResultSet()
+③ ResultSet executeQuery(String sql)
+④ int executeUpdate(String sql)
+
+
+
+
+
+
+
+
+
+
+
