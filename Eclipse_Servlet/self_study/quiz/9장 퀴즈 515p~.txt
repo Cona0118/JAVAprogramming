@@ -1,0 +1,55 @@
+[퀴즈로 정리합시다] 515p~
+1. 데이터베이스와 연결을 위해서는 커넥션 객체를 얻어야 합니다. 필요할 때마다 커넥션을 얻는 것이 아니고 
+	미리 풀에 저장해 두었다가 필요할 때 마다 가져다 사용하도록 하는 기법을 무엇이라고 하나요?
+ - 커넥션 풀
+
+
+2. select 문을 수행한 후 얻어온 데이터베이스의 데이터를 저장하기 위한 자바 객체타입에 관련된 용어가 아닌 것을 고르시오. ③
+	① dto	 	② vo		 ③ dao		 ④ domain object
+
+
+3. 다음과 같은 커넥션 풀을 위한 리소스를 추가하는 설정 파일은 무엇인가? ① 
+┌───────────────────────────────────────────────────────────────────────────────────────┐
+│	<Context docBase="web-study-09" path="/web-study-09"								│
+│		reloadable="true" source="org.eclipse.jst.jee.server:web-study-09">				│
+│		<Resource name="jdbc/myoracle" auth="Container" type="javax.sql.DataSource"		│
+│		driverClassNane="oracle.jdbc.OracleDriver"										│
+│		url="jdbc:oracle:thin:@127.0.0.1:1521:XE"										│
+│		username="scott" password="tiger" maxActive="20" maxIdle-"10"					│
+│		maxwait="-1" />																	│
+│	</Context>																			│
+└───────────────────────────────────────────────────────────────────────────────────────┘
+	① server.xml	 	② web.xml		 ③ context.xml		 ④ resource.xml
+
+ 
+4. 접속할 오라클 데이터베이스 이름이 ORCL이고 사용자 계정이 hr이고 계정 암호가 hr일 경우 
+	이에 맞도록 커넥션 풀을 위한 리소스 태그를 기술하시오.
+ -	<Resource name="jdbc/myoracle" auth="Container" type="javax.sql.DatraSource"
+	driverClassName="oracle.jdbc.OracleDriver" url="jdbc:oracle:ORCL:@127.0.0.1:1521:XE"	
+	username="hr" password="hr" maxActive="20" maxIdle="10" maxwait="-1" />	
+	
+	
+5. 게시글 정보를 저장할 board 테이블을 자바에서 처리하고자 BoardDAO 클래스를 설계하려고 합니다. 
+	게시글 정보를 저장할 VO 객체의 이름은 BoardVO라고 할 때 DAO에서 필요로 한 메소드를 정의해 봅시다.
+	
+5-1. 게시글 목록을 얻어오는 메소드의 원형을 정의하시오(힌트 : 메소드 이름은 getBoardList로 한다.)
+
+
+5-2. 게시글 올리기 폼에서 입력받은 게시글의 정보를 데이터베이스에 추가하기 위한 메소드를 insertBoard라고 할 경우 
+ 	이 메소드의 매개 변수의 형태를 기술하시오.
+ 	
+ 	
+6. 데이터베이스에서 커넥션 풀의 중요성을 설명하시오.
+ - 데이터베이스에 여러 요청이 몰리더라도 순차적으로 요청을 처리할 수 있다.
+ 
+
+7. 커넥션 풀에 <Resource> 태그의 name 속성 값이 "jdbc/mydb"로 등록되어 있다면 이를 DataSource로가져와
+	 Connection 객체를 가져오는 코드를 작성하시오
+
+
+
+
+
+
+
+
