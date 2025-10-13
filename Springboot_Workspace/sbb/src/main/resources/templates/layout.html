@@ -11,7 +11,13 @@
 		<title>Hello, sbb!</title>
 	</head>
 	<body>
-		<!--삽입될 내용-->
-		<th:block layout:fragment="content"></th:block>
+	<!--내비게이션 바-->
+	<nav th:replace="~{navbar :: navbarFragment}"></nav>
+	<!--삽입될 내용-->
+	<th:block layout:fragment="content"></th:block>
+	<!--Bootstrap js-->
+	<script th:src="@{/bootstrap.min.js}"></script>
+	<!--자바스크립트-->
+	<th:block layout:fragment="script"></th:block>
 	</body>
 </html>
