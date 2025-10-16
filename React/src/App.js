@@ -16,8 +16,16 @@ const App = () =>{
 export default App;
 */
 
+/*
 import Say from './Say';
 const App = () => {
   return <Say />
+};
+export default App;
+*/
+
+import EventPractice from './EventPractice';
+const App = () => {
+  return <EventPractice />
 };
 export default App;
