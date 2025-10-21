@@ -61,6 +61,7 @@ class App extends Component {
 export default App;
 */
 
+/*
 import { Component } from "react";
 import InteractionSample2 from "./InteractionSample2";
 class App extends Component {
@@ -71,3 +72,85 @@ class App extends Component {
   }
 }
 export default App;
+*/
+
+/*
+import { Component } from "react";
+import LifeCycleSample from "./LifeCycleSample";
+function getRandomColor(){
+  return '#' + Math.floor(Math.random() * 16777215).toString(16);
+}
+class App extends Component{
+  state = { color : '#000000' }
+
+  handleClick = () => {
+    this.setState({
+      color: getRandomColor()
+    });
+  }
+
+  render() {
+    return(
+      <div>
+        <button onClick={this.handleClick}>랜덤 생상</button>
+        <LifeCycleSample color = {this.state.color}/>
+      </div>
+    );
+  }
+}
+export default App;
+*/
+
+/*
+import Info from './info';
+const App = () => {
+  return <Info />;
+};
+export default App;
+*/
+
+/*
+import Counter3 from './Counter2';
+const App = () =>{
+  return <Counter3 />
+};
+export default App;
+*/
+
+/*
+import { useState } from 'react';
+import Info from './info';
+const App = () => {
+  const [visible, setVisible] = useState(false);
+  return (
+    <div>
+      <button
+        onClick={() => {
+          setVisible(!visible);
+        }}
+        >
+          {visible ? '숨기기' : '보이기'}
+        </button>
+        <hr/>
+        {visible && <Info/>}
+    </div>
+  )
+};
+export default App;
+*/
+
+
+import Info3 from './info3';
+const App = () =>{
+  return <Info3 />
+};
+export default App;
+
+
+/*
+import Average from './Average';
+const App = () =>{
+  return <Average />
+};
+export default App;
+*/
