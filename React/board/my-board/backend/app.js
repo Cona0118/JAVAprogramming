@@ -44,52 +44,67 @@ app.get('/api/posts', async (req, res) => {
         let limit = parseInt(req.query.limit, 10);
         const rawSearch = (req.query.search || "").toString();
         const searchType = (req.query.searchType || "all").toString();
+        const tab = (req.query.tab || "all").toString(); // ✅ 탭 추가
 
         if (isNaN(page) || page < 1) page = 1;
         if (isNaN(limit) || limit < 1) limit = 5;
         const offset = (page - 1) * limit;
+
+        let whereClauses = [];
+        let params = [];
+
+        // 검색 조건
+        if (rawSearch && rawSearch.trim() !== "") {
+            const escaped = escapeLike(rawSearch.trim());
+            const like = `%${escaped}%`;
+
+            switch (searchType) {
+                case 'title':
+                    whereClauses.push("p.title LIKE ? ESCAPE '\\\\'");
+                    params.push(like);
+                    break;
+                case 'content':
+                    whereClauses.push("p.content LIKE ? ESCAPE '\\\\'");
+                    params.push(like);
+                    break;
+                case 'author':
+                    whereClauses.push("p.author LIKE ? ESCAPE '\\\\'");
+                    params.push(like);
+                    break;
+                case 'all':
+                default:
+                    whereClauses.push("(p.title LIKE ? ESCAPE '\\\\' OR p.content LIKE ? ESCAPE '\\\\')");
+                    params.push(like, like);
+                    break;
+            }
+        }
+
+        // 인기글 조건
+        if (tab === 'popular') {
+            whereClauses.push("(p.likes - p.dislikes) >= 10");
+        }
+
+        let whereSql = '';
+        if (whereClauses.length > 0) {
+            whereSql = 'WHERE ' + whereClauses.join(' AND ');
+        }
 
         // 댓글 수 포함 SQL
         let selectSql = `
             SELECT p.*, COUNT(c.id) AS comment_count
             FROM posts p
             LEFT JOIN comments c ON p.id = c.post_id
+            ${whereSql}
+            GROUP BY p.id
+            ORDER BY p.id DESC
+            LIMIT ${limit} OFFSET ${offset}
         `;
-        const selectParams = [];
 
-        if (rawSearch && rawSearch.trim() !== "") {
-            const escaped = escapeLike(rawSearch.trim());
-            const like = `%${escaped}%`;
+        const [rows] = await connection.execute(selectSql, params);
 
-            let whereClause = '';
-            switch (searchType) {
-                case 'title':
-                    whereClause = " WHERE p.title LIKE ? ESCAPE '\\\\'";
-                    selectParams.push(like);
-                    break;
-                case 'content':
-                    whereClause = " WHERE p.content LIKE ? ESCAPE '\\\\'";
-                    selectParams.push(like);
-                    break;
-                case 'author':
-                    whereClause = " WHERE p.author LIKE ? ESCAPE '\\\\'";
-                    selectParams.push(like);
-                    break;
-                case 'all':
-                default:
-                    whereClause = " WHERE p.title LIKE ? ESCAPE '\\\\' OR p.content LIKE ? ESCAPE '\\\\'";
-                    selectParams.push(like, like);
-                    break;
-            }
-            selectSql += whereClause;
-        }
-
-        selectSql += ` GROUP BY p.id ORDER BY p.id DESC LIMIT ${limit} OFFSET ${offset}`;
-
-        const [rows] = await connection.execute(selectSql, selectParams);
-
-        // 총 게시글 수
-        const [countRows] = await connection.execute('SELECT COUNT(*) as total FROM posts');
+        // 총 게시글 수 (페이지네이션용)
+        let countSql = `SELECT COUNT(*) as total FROM posts p ${whereSql}`;
+        const [countRows] = await connection.execute(countSql, params);
         const total = countRows[0]?.total || 0;
         const totalPages = Math.max(1, Math.ceil(total / limit));
 
@@ -101,16 +116,16 @@ app.get('/api/posts', async (req, res) => {
 });
 
 // 글 상세
-app.get('/api/posts/:id', async (req, res) => {
-    const { id } = req.params;
-    try {
-        const [rows] = await connection.execute('SELECT * FROM posts WHERE id = ?', [id]);
-        if (!rows.length) return res.status(404).json({ error: "글이 없습니다." });
-        res.json(rows[0]);
-    } catch (err) {
-        console.error('Error in GET /api/posts/:id', err);
-        res.status(500).json({ error: err.message });
-    }
+app.get("/api/posts/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const [rows] = await connection.execute("SELECT * FROM posts WHERE id = ?", [id]);
+    if (!rows.length) return res.status(404).json({ error: "글이 없습니다." });
+    res.json(rows[0]);
+  } catch (err) {
+    console.error("Error in GET /api/posts/:id", err);
+    res.status(500).json({ error: err.message });
+  }
 });
 
 // 글 작성
@@ -203,6 +218,21 @@ app.delete('/api/posts/:id', async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 });
+
+// 조회수 증가 (세션/클라이언트에서 한 번만 호출하도록 프론트에서 제어)
+app.post("/api/posts/:id/view", async (req, res) => {
+  const { id } = req.params;
+  try {
+    await connection.execute("UPDATE posts SET views = views + 1 WHERE id = ?", [id]);
+    const [rows] = await connection.execute("SELECT views FROM posts WHERE id = ?", [id]);
+    if (!rows || rows.length === 0) return res.status(404).json({ error: "글이 없습니다." });
+    res.json({ views: rows[0].views });
+  } catch (err) {
+    console.error("Error in POST /api/posts/:id/view:", err);
+    res.status(500).json({ error: "조회수 업데이트 실패" });
+  }
+});
+
 
 // === COMMENTS API ===
 
