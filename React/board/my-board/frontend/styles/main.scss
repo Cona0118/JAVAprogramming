@@ -1,0 +1,55 @@
+// ===== mixins 불러오기 =====
+@use './mixins' as *;
+
+// ===== PostList, PostForm, PostDetail 불러오기 =====
+@use './PostList';
+@use './PostForm';
+@use './PostDetail';
+
+// ===== 공통 스타일 =====
+body {
+  font-family: 'Noto Sans KR', 'Segoe UI', sans-serif;
+  background-color: #f7f8fa;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+  color: #007bff;
+  &:hover { text-decoration: underline; }
+}
+
+.container {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+// ===== 페이지 네비게이션 버튼 공통 =====
+.button-pagination {
+  background-color: #ffffff;
+  color: #000;
+  border: 1px solid #e6e9ef;
+  border-radius: 8px;
+  padding: 0.46rem 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.12s ease, color 0.12s ease, transform 0.06s;
+
+  &:hover:not(:disabled) { background-color: #f0f2f5; color: #000; }
+
+  &.active {
+    background-color: #0b74ff;
+    color: #fff;
+    border-color: #0b74ff;
+  }
+
+  &:disabled {
+    opacity: 0.45;
+    cursor: default;
+    transform: none;
+    box-shadow: none;
+  }
+}
